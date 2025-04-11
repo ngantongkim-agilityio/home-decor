@@ -1,20 +1,19 @@
-# Welcome to your Expo app 👋
+# 🛠️ Expo Practice
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## 🌟 Overview
 
-## Get started
+This document provides the requirements, technical stack and estimate detail features for Practice with Expo
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## 🚀 Getting Started
 
-2. Start the app
+### 📋 Prerequisites
 
-   ```bash
-    npx expo start
-   ```
+Ensure you have the correct versions installed:
+
+- **[Node.js >=18.x](https://nodejs.org/en/download/package-manager)**
+- **[pnpm v10.2.1](https://pnpm.io/installation)**
 
 In the output, you'll find options to open the app in a
 
@@ -23,28 +22,74 @@ In the output, you'll find options to open the app in a
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
+### Run app
 
-When you're ready, run:
+| Command                                                                   | Action                             |
+| :------------------------------------------------------------------------ | :--------------------------------- |
+| `$ git clone git@gitlab.asoft-python.com:ngan.tongkim/react-training.git` | Clone repository                   |
+| `$ pnpm install`                                                          | Install packages dependencies      |
+| `$ git checkout feat/expo-practice`                                       | Check out branch                   |
+| `$ pnpm start`                                                            | Starts the application (Expo CLI). | 
 
-```bash
-npm run reset-project
+---
+
+## 🗂️ Project Structure
+
+```shell
+.
+
+├── .husky                          # Husky configuration
+├── assets                          # Public assets folder
+├── .storybook                      # Storybook folder
+├── src
+│   ├── app                         # Application routes and APIs
+│   ├── components                  # Application components
+│   ├── constants                   # 
+│   ├── types                       # 
+│   ├── hooks                       # 
+├── eas.json                        # 
+├── .editorconfig                   # Editor configuration
+├── .eslint.config.mjs              # ESLint configuration
+├── components.json                 # Shadcn configuration
+├── .gitignore                      # Git ignore file
+├── .lintstagedrc                   # Lint-stage configuration
+├── .prettierrc                     # Prettier configuration
+├── .commitlint.config.js           # Commitlint configuration
+├── package-lock.json
+├── package.json                    # Application dependencies
+├── README.md                       # README file
+├── tsconfig.json                   # TypeScript configuration
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## 🛠️ Technical Stack
 
-To learn more about developing your project with Expo, look at the following resources:
+### 💻 Languages
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- [HTML](https://www.w3schools.com/html/): is the standard markup language for Web pages.
+- [CSS](https://www.w3schools.com/css/): is the language we use to style an HTML document.
+- [Typescript](https://www.typescriptlang.org): is an open-source programming language developed and maintained by Microsoft. It is a strict syntactical superset of JavaScript, and adds optional static typing to the language. TypeScript is designed for development of large applications and transpiled to JavaScript.
 
-## Join the community
+### 📚 Frameworks & Libraries
 
-Join our community of developers creating universal apps.
+- [React Native](https://reactnative.dev/): a best-in-class JavaScript library for building user interfaces.
+- [Expo](https://docs.expo.dev/): a framework that makes developing Android and iOS apps easier.
+- [Zustand](https://github.com/pmndrs/zustand): a small, fast and scalable bearbones state-management solution using simplified flux principles. Has a comfy API based on hooks, isn't boilerplate or opinionated.
+- [React Hook Form](https://react-hook-form.com/): performant, flexible and extensible forms with easy-to-use validation.
+- [Zod](https://zod.dev/): is a TypeScript-first schema declaration and validation library.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### 🧰 Development Tools
+
+- [Husky](https://github.com/typicode/husky): can prevent bad git commit, git push.
+- [Prettier](https://prettier.io): is an opinionated code formatter
+- [Commitlint](https://commitlint.js.org): Easy setup. Get high commit message quality and short feedback cycles by linting commit messages right when they are authored.
+
+### ✅ Testing
+
+- [Jest](https://jestjs.io/): is a delightful JavaScript Testing Framework with a focus on simplicity.
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/): React Testing Library builds on top of DOM Testing Library by adding APIs for working with React components.
+
+---
+
