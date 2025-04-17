@@ -7,15 +7,13 @@
     "prebuild": "expo prebuild --clean",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "test": "jest --watchAll",
+    "test": "jest --passWithNoTests",
     "lint": "expo lint",
     "prepare": "cd .. && husky home-decor/.husky"
   },
-  "jest": {
-    "preset": "jest-expo"
-  },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
+    "@react-native-async-storage/async-storage": "^2.1.2",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
     "@tamagui/babel-plugin": "^1.125.34",
@@ -51,6 +49,7 @@
     "@commitlint/config-conventional": "^19.8.0",
     "@eslint/compat": "^1.2.8",
     "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/react-native": "^13.2.0",
     "@types/jest": "^29.5.12",
     "@types/react": "~18.3.12",
     "@types/react-test-renderer": "^18.3.0",
