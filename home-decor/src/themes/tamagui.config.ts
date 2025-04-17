@@ -1,11 +1,22 @@
-import { defaultConfig } from '@tamagui/config/v4'
-import { createTamagui } from 'tamagui'
+import { defaultConfig } from '@tamagui/config/v4';
+import { createTamagui, createTokens } from 'tamagui';
 
-export const tamaguiConfig = createTamagui(defaultConfig)
+import { colors, metrics, headingFont, bodyFont } from '@/themes';
 
-export default tamaguiConfig
+const { size, space, zIndex, radius } = metrics;
 
-export type Conf = typeof tamaguiConfig
+export const tamaguiConfig = createTamagui({
+  ...defaultConfig,
+  fonts: {
+    body: bodyFont,
+    heading: headingFont,
+  },
+  tokens: createTokens({ color: colors, space, size, radius, zIndex }),
+});
+
+export default tamaguiConfig;
+
+export type Conf = typeof tamaguiConfig;
 
 declare module 'tamagui' {
   interface TamaguiCustomConfig extends Conf {}

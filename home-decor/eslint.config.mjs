@@ -56,6 +56,7 @@ export default [
         'react/prop-types': 'off',
         'react-native/no-inline-styles': 'off',
         '@typescript-eslint/no-unused-vars': 0,
+        '@typescript-eslint/no-empty-object-type': 0,
     },
   },
 ];
