@@ -1,11 +1,9 @@
 import js from '@eslint/js';
-import { fixupPluginRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import sortImport from 'eslint-plugin-import';
 import prettier from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -43,11 +41,9 @@ export default [
       react,
       '@typescript-eslint': typescriptEslint,
       prettier,
-      'react-hooks': fixupPluginRules(reactHooks),
       import: sortImport,
     },
     languageOptions: {
-        parser: tsParser,
       ecmaVersion: 'latest',
       sourceType: 'module',
     },
@@ -58,7 +54,8 @@ export default [
         'react-native/sort-styles': 'off',
         'react-native/no-raw-text': 'off',
         'react/prop-types': 'off',
-        'react-native/no-inline-styles': 'off'
+        'react-native/no-inline-styles': 'off',
+        '@typescript-eslint/no-unused-vars': 0,
     },
   },
 ];
