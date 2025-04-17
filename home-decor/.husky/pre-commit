@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
 
+cd home-decor
 pnpm dlx lint-staged
