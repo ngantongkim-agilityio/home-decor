@@ -37,12 +37,13 @@ export const spacing = {
   '15': 60,
   '16': 64,
   '20': 80,
+  true: 4,
 } as const;
 
 export const metrics = {
   screenHeight,
   screenWidth,
-  marginBottomScreen: 36,
+  marginBottomScreen: 34,
   padding: {},
   margin: {},
   space: {
@@ -73,6 +74,6 @@ export const metrics = {
   size: {
     ...spacing,
     full: '100%',
-    inputHeightMedium: 45,
+    inputHeightMedium: 56,
   } as const,
 };
