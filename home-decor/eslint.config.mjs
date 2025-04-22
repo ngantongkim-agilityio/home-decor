@@ -57,6 +57,7 @@ export default [
         'react-native/no-inline-styles': 'off',
         '@typescript-eslint/no-unused-vars': 0,
         '@typescript-eslint/no-empty-object-type': 0,
+        '@typescript-eslint/no-require-imports': 0,
     },
   },
 ];
