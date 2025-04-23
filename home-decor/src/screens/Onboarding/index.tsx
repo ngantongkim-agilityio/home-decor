@@ -67,7 +67,8 @@ export const Onboarding = () => {
         index: currentActiveSlide + 1,
       });
     } else {
-      router.push(`/(tabs)`);
+      router.push(`/launch`);
+      // router.push(`/(tabs)`);
     }
   }, [currentActiveSlide]);
 
