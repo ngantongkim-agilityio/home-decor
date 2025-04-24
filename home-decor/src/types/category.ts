@@ -1,5 +1,5 @@
 export interface ICategory {
-  imageSrc: string;
+  imageSrc: React.ReactNode;
   label: string;
   isActive: boolean;
 }
