@@ -8,6 +8,8 @@ interface ICategoryItemProps {
   onPress?: () => void;
 }
 const CategoryItem = ({ item, onPress = () => {} }: ICategoryItemProps) => {
+  const Icon = item.imageSrc;
+
   return (
     <TouchableWithoutFeedback onPress={onPress} testID="CategoryItem">
       <Stack>
@@ -16,7 +18,7 @@ const CategoryItem = ({ item, onPress = () => {} }: ICategoryItemProps) => {
           height={44}
           background={item.isActive ? '$bgDark' : '$bgSecondary'}
         >
-          <Image source={{ uri: item.imageSrc }} width={28} height={28} />
+          <Icon />
         </Stack>
         <Text
           mt={3}
