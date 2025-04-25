@@ -1,12 +1,17 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
-
 import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import {
+  HomeIcon,
+  CategoriesIcon,
+  CartIcon,
+  WishlistIcon,
+  ProfileIcon,
+} from '@/components';
 
 const TabLayout = () => {
   const colorScheme = useColorScheme();
@@ -31,17 +36,44 @@ const TabLayout = () => {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+          tabBarIcon: ({ focused }) => (
+            <HomeIcon color={focused ? '#363130' : '#f4b5a4'} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="categories"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="paperplane.fill" color={color} />
+          title: 'Categories',
+          tabBarIcon: ({ focused }) => (
+            <CategoriesIcon color={focused ? '#363130' : '#f4b5a4'} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="cart"
+        options={{
+          title: 'Cart',
+          tabBarIcon: ({ focused }) => (
+            <CartIcon color={focused ? '#363130' : '#f4b5a4'} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="wishlist"
+        options={{
+          title: 'Wishlist',
+          tabBarIcon: ({ focused }) => (
+            <WishlistIcon color={focused ? '#363130' : '#f4b5a4'} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ focused }) => (
+            <ProfileIcon color={focused ? '#363130' : '#f4b5a4'} />
           ),
         }}
       />
