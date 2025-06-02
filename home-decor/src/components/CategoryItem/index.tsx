@@ -1,5 +1,6 @@
 import { TouchableWithoutFeedback } from 'react-native';
 import { Image, Text, Stack } from 'tamagui';
+
 // Types
 import { ICategory } from '@/types';
 
