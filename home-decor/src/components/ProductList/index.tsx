@@ -6,6 +6,7 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
 
 // Components
 import ProductCard from '../ProductCard';
@@ -22,13 +23,15 @@ export const ProductList = ({
   products,
   onLoadMore = () => {},
 }: IProductListProps) => {
-  const navigation = useNavigation<NavigationProp<ParamListBase>>();
+  const router = useRouter();
 
   const getKeyExtractor = ({ id }: IProduct) => id.toString();
 
   const renderItemProduct = ({ item }: ListRenderItemInfo<IProduct>) => {
     const handleNavigateProductDetail = (product: IProduct) => {
-      // navigation.navigate(SCREEN.PRODUCT_DETAIL, { product });
+      // router.push({ pathname: `/(tabs)/(home)/details/${product.id}` });
+      const id = product.id.toString();
+      router.push(`/details/${id}`);
     };
 
     return <ProductCard product={item} onPress={handleNavigateProductDetail} />;

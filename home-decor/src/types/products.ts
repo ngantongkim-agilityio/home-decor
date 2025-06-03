@@ -4,7 +4,7 @@ export interface IPrice {
 }
 
 export interface IProduct {
-  id: number;
+  id: string;
   images?: string[];
   title: string;
   description?: string;
