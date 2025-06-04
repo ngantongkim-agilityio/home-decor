@@ -1,15 +1,15 @@
 import { defaultConfig } from '@tamagui/config/v4';
 import { createTamagui, createTokens } from 'tamagui';
 
-import { colors, metrics, headingFont, bodyFont } from '@/themes';
+import { colors, metrics, systemFont } from '@/themes';
 
 const { size, space, zIndex, radius } = metrics;
 
 export const tamaguiConfig = createTamagui({
   ...defaultConfig,
   fonts: {
-    body: bodyFont,
-    heading: headingFont,
+    body: systemFont,
+    heading: systemFont,
   },
   tokens: createTokens({ color: colors, space, size, radius, zIndex }),
 });

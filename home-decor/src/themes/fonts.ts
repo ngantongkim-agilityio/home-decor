@@ -1,6 +1,14 @@
-import { createInterFont } from '@tamagui/font-inter';
+import { createFont } from 'tamagui';
 
-export const headingFont = createInterFont({
+const getFontFace = (fontFamily = 'Poppins') => ({
+  normal: { normal: `${fontFamily}Regular`, italic: `${fontFamily}-Regular` },
+  bold: { normal: `${fontFamily}Bold`, italic: `${fontFamily}-Bold` },
+  400: { normal: `${fontFamily}Regular`, italic: `${fontFamily}-Regular` },
+  600: { normal: `${fontFamily}SemiBold`, italic: `${fontFamily}-SemiBold` },
+  700: { normal: `${fontFamily}Bold`, italic: `${fontFamily}-Bold` },
+});
+
+export const systemFont = createFont({
   size: {
     6: 15,
   },
@@ -27,19 +35,5 @@ export const headingFont = createInterFont({
     14: -5,
     15: -6,
   },
-  face: {
-    700: { normal: 'InterBold' },
-  },
+  face: getFontFace('Poppins'),
 });
-
-export const bodyFont = createInterFont(
-  {
-    face: {
-      700: { normal: 'InterBold' },
-    },
-  },
-  {
-    sizeSize: (size) => Math.round(size * 1.1),
-    sizeLineHeight: (size) => Math.round(size * 1.1 + (size > 20 ? 10 : 10)),
-  },
-);
