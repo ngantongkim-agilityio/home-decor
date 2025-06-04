@@ -2,13 +2,13 @@ import { useCallback, useRef, useState, useMemo } from 'react';
 import { router } from 'expo-router';
 import {
   FlatList,
-  View,
   ViewToken,
   StyleSheet,
   ViewabilityConfigCallbackPairs,
   useWindowDimensions,
+  SafeAreaView,
 } from 'react-native';
-import { YStack } from 'tamagui';
+import { Stack, YStack, H1, Text, XStack, Circle } from 'tamagui';
 
 // Components
 import { Image } from '@/components/common/Image';
@@ -68,7 +68,6 @@ export const Onboarding = () => {
       });
     } else {
       router.push(`/launch`);
-      // router.push(`/(tabs)`);
     }
   }, [currentActiveSlide]);
 
@@ -78,102 +77,53 @@ export const Onboarding = () => {
 
   const renderItem = (item: SlideItem) => {
     return (
-      <Image
-        resizeMode="cover"
-        source={item.image}
-        width={width}
-        height={500}
-        // style={[{ width: width, height: 500 }]}
-      >
-        {/* <View style={[styles.content, { height: height * 0.7 }]}> */}
-        {/* <Typography
-          text={item.title}
-          fontWeight={FontWeight.Bold}
-          size={SizeType.Xxl}
-          style={styles.title}
-          variant={TypoVariant.Paragraph2}
-        /> */}
-        {/* {index === 0 && (
-          <View style={styles.imageWrapper}>
-            <Image source={Images.logo} />
-          </View>
-        )} */}
-        {/* <Typography text={item.description || ''} style={styles.description} /> */}
-        {/* </View> */}
-      </Image>
+      <YStack flex={1}>
+        <Image source={item.image} width={width} height={500}></Image>
+        {/* <YStack flex={1} justify='center' gap='$4' p='$5'> */}
+        <H1 fontFamily="$body" color="$primary" fontSize={30} fontWeight="700">
+          {item.title}
+        </H1>
+        <Text text="center" color="$textSecondary">
+          {item.description}
+        </Text>
+        {/* </YStack > */}
+      </YStack>
     );
   };
 
   return (
-    <YStack>
+    <YStack flex={1}>
       <FlatList
+        style={{ flexGrow: 1 }}
         ref={flatListRef}
         data={ONBOARDING_SLIDES}
-        keyExtractor={(item, index) => item.id}
+        keyExtractor={(item) => item.id}
         horizontal
-        contentContainerStyle={{ height }}
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item, index }) => renderItem(item)}
+        renderItem={({ item }) => renderItem(item)}
         pagingEnabled
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       />
-      <View style={styles.footerWrapper}>
-        <View style={[styles.footerContainer, { width: width }]}>
-          <View style={styles.indicatorContainer}>
+      <YStack style={{ bottom: 50 }} p="$5" position="absolute">
+        <XStack justify="space-between" items="center" width={'$full'}>
+          <XStack gap="$1.5">
             {ONBOARDING_SLIDES.map((slide, index) => (
-              <View
-                style={[
-                  styles.indicator,
-                  {
-                    backgroundColor:
-                      index === currentActiveSlide
-                        ? colors.primary
-                        : colors.secondary,
-                  },
-                ]}
+              <Circle
+                width={index === currentActiveSlide ? '$9' : '$3'}
+                height="$2"
+                bg={index === currentActiveSlide ? '$primary' : '$tertiary'}
                 key={slide.title}
               />
             ))}
-          </View>
-          <Button title={buttonTitle} onPress={handleGetStarted} />
-        </View>
-      </View>
+          </XStack>
+          <Button
+            title={buttonTitle}
+            fit={true}
+            width={133}
+            onPress={handleGetStarted}
+          />
+        </XStack>
+      </YStack>
     </YStack>
   );
 };
-
-const styles = StyleSheet.create({
-  footerWrapper: {
-    position: 'absolute',
-    bottom: 50,
-  },
-
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    flex: 1,
-  },
-  content: {
-    rowGap: 10,
-  },
-  title: { paddingHorizontal: 50, textAlign: 'center' },
-  description: { paddingHorizontal: 30, paddingTop: 10, textAlign: 'center' },
-  imageWrapper: { alignItems: 'center' },
-
-  footerContainer: {
-    rowGap: 32,
-    paddingHorizontal: 20,
-  },
-  indicatorContainer: {
-    flexDirection: 'row',
-    alignSelf: 'center',
-    columnGap: 5,
-  },
-  indicator: {
-    backgroundColor: colors.primary,
-    borderRadius: 4,
-    width: 8,
-    height: 8,
-  },
-});

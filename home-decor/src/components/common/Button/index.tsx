@@ -23,7 +23,7 @@ const ButtonFrame = styled(XStack, {
   context: ButtonContext,
   name: 'Button',
   tag: 'button',
-  height: 56,
+  height: 41,
   cursor: 'pointer',
   borderWidth: 0,
   justify: 'center',
@@ -33,8 +33,8 @@ const ButtonFrame = styled(XStack, {
   variants: {
     variant: {
       primary: {
-        borderRadius: 8,
-        backgroundColor: '#242424',
+        borderRadius: 50,
+        backgroundColor: '$primary',
       },
       secondary: {
         backgroundColor: 'transparent',
@@ -67,14 +67,14 @@ const ButtonFrame = styled(XStack, {
 
 const ButtonText = styled(Text, {
   context: ButtonContext,
-  fontSize: '$4',
+  fontSize: '$6',
   fontFamily: '$body',
   fontWeight: 'bold',
   lineHeight: 21,
   variants: {
     variant: {
       primary: {
-        color: 'white',
+        color: '$secondary',
       },
 
       secondary: {
