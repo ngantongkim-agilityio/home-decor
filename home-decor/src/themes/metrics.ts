@@ -73,6 +73,8 @@ export const metrics = {
   shadowOffset: {},
   size: {
     ...spacing,
+    screenHeight,
+    screenWidth,
     full: '100%',
     inputHeightMedium: 56,
   } as const,
