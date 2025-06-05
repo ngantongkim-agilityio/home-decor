@@ -77,16 +77,23 @@ export const Onboarding = () => {
 
   const renderItem = (item: SlideItem) => {
     return (
-      <YStack flex={1}>
-        <Image source={item.image} width={width} height={500}></Image>
-        {/* <YStack flex={1} justify='center' gap='$4' p='$5'> */}
-        <H1 fontFamily="$body" color="$primary" fontSize={30} fontWeight="700">
-          {item.title}
-        </H1>
-        <Text text="center" color="$textSecondary">
-          {item.description}
-        </Text>
-        {/* </YStack > */}
+      <YStack flex={1} width="$screenWidth">
+        <YStack bg={'$tertiary'} height={530} borderBottomLeftRadius={24}>
+          <Image source={item.image} width={width} height={500} />
+        </YStack>
+        <YStack items="center" justify="center" gap="$4" p="$5">
+          <H1
+            fontFamily="$body"
+            color="$primary"
+            fontSize={30}
+            fontWeight="700"
+          >
+            {item.title}
+          </H1>
+          <Text text="center" color="$textSecondary" fontSize={12}>
+            {item.description}
+          </Text>
+        </YStack>
       </YStack>
     );
   };
@@ -104,7 +111,7 @@ export const Onboarding = () => {
         pagingEnabled
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       />
-      <YStack style={{ bottom: 50 }} p="$5" position="absolute">
+      <YStack style={{ bottom: 30 }} p="$5" position="absolute">
         <XStack justify="space-between" items="center" width={'$full'}>
           <XStack gap="$1.5">
             {ONBOARDING_SLIDES.map((slide, index) => (

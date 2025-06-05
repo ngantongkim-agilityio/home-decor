@@ -1,18 +1,17 @@
+import { useCallback } from 'react';
 import {
   KeyboardAvoidingView,
-  StyleSheet,
   useWindowDimensions,
   ScrollView,
-  View,
-  StatusBar,
 } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
+import { useShallow } from 'zustand/shallow';
 
 // Components
-import { Stack } from 'tamagui';
-import { Button, Input } from '@/components';
+import { Stack, Text, XStack, YStack } from 'tamagui';
+import { BackIcon, Button, Input } from '@/components';
 
 // Types
 import { IVerify } from '@/types';
@@ -36,122 +35,76 @@ const VerifyCode = () => {
     },
   });
 
-  const [verify_id, removeVerifyId] = authStore((state) => [
-    state.verify_id,
-    state.removeVerifyId,
-  ]);
+  const [verify_id, removeVerifyId] = authStore(
+    useShallow((state) => [state.verify_id, state.removeVerifyId]),
+  );
 
   const {
     verifyCode: { mutate },
   } = useAuth();
 
-  const handleVerifyCode = ({ code }: IForm) => {
-    const data: IVerify = {
-      verify_id,
-      code: Number(code),
-    };
+  const handleVerifyCode = useCallback(
+    ({ code }: IForm) => {
+      const data: IVerify = {
+        verify_id,
+        code: Number(code),
+      };
 
-    mutate(data, {
-      onSuccess: () => {
-        removeVerifyId();
-        router.navigate(`/(auth)/login`);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-    });
-  };
+      mutate(data, {
+        onSuccess: () => {
+          removeVerifyId();
+          router.navigate(`/(auth)/login`);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+    },
+    [mutate, removeVerifyId, router, verify_id],
+  );
+
+  const handleBack = useCallback(() => {
+    router.back();
+  }, [router]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar
-        hidden={false}
-        backgroundColor="$light"
-        barStyle="dark-content"
-      />
+    <SafeAreaView>
       <KeyboardAvoidingView behavior="padding">
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            flexGrow: 1,
-            width,
-            justifyContent: 'center',
-          }}
-        >
-          <View style={styles.boxShadow}>
-            <Stack>
-              <Controller
-                name="code"
-                control={control}
-                render={({ field: { onChange, ...props } }) => {
-                  return (
-                    <Input
-                      id="code"
-                      label="Enter your code"
-                      mb={35}
-                      onChangeText={onChange}
-                      {...props}
-                    />
-                  );
-                }}
-              />
-            </Stack>
-            <Stack mt={50} mr={32}>
-              <View style={styles.buttonBoxShadow}>
-                <Button
-                  title="Submit"
-                  variant="primary"
-                  onPress={handleSubmit(handleVerifyCode)}
+        <YStack px={24}>
+          <XStack items="center" justify="space-between" py={10} mb={20}>
+            <BackIcon onPress={handleBack} />
+            <Text color="$primary" fontWeight={600} fontSize={20}>
+              Verify Code
+            </Text>
+            <Stack width={24} height={24} />
+          </XStack>
+          <Controller
+            name="code"
+            control={control}
+            render={({ field: { onChange, ...props } }) => {
+              return (
+                <Input
+                  id="code"
+                  label="Enter your code"
+                  placeholder="123456"
+                  mb={35}
+                  onChangeText={onChange}
+                  {...props}
                 />
-              </View>
-            </Stack>
-          </View>
-        </ScrollView>
+              );
+            }}
+          />
+          <Stack items="center">
+            <Button
+              title="Submit"
+              width={186}
+              onPress={handleSubmit(handleVerifyCode)}
+            />
+          </Stack>
+        </YStack>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '$light',
-  },
-  boxShadow: {
-    paddingVertical: 35,
-    paddingLeft: 32,
-    marginRight: 32,
-    marginTop: 32,
-    backgroundColor: '$light',
-    shadowColor: '$shadowPrimary',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 24,
-    elevation: 15,
-  },
-  buttonBoxShadow: {
-    borderRadius: 8,
-    marginBottom: 28,
-    backgroundColor: '$light',
-    shadowColor: '$shadowSecondary',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 24,
-    elevation: 15,
-  },
-  lineStyle: {
-    width: '35%',
-    borderRadius: 2,
-    height: 1,
-    backgroundColor: '$bgLight',
-  },
-});
 
 export default VerifyCode;

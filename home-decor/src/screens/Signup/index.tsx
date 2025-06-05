@@ -1,18 +1,23 @@
+import { useCallback } from 'react';
 import {
   KeyboardAvoidingView,
-  StyleSheet,
   useWindowDimensions,
   ScrollView,
-  View,
-  StatusBar,
 } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, Link } from 'expo-router';
+import { useShallow } from 'zustand/shallow';
 
 // Components
-import { Text, Stack } from 'tamagui';
-import { Button, Input } from '@/components';
+import { Text, Stack, YStack, XStack } from 'tamagui';
+import {
+  BackIcon,
+  Button,
+  FacebookIcon,
+  GoogleIcon,
+  Input,
+} from '@/components';
 
 // Types
 import {
@@ -49,7 +54,7 @@ const SignUp = () => {
     },
   });
 
-  const [setVerifyId] = authStore((state) => [state.setVerifyId]);
+  const [setVerifyId] = authStore(useShallow((state) => [state.setVerifyId]));
 
   const {
     signUp: { mutate },
@@ -79,7 +84,7 @@ const SignUp = () => {
         const { verify_id } = verifyData || {};
 
         !!verify_id && setVerifyId(verify_id);
-        router.navigate(`/(auth)/(signup)/verify_code`);
+        router.navigate(`/verify-code`);
       },
       onError: (error) => {
         console.log(error);
@@ -87,13 +92,12 @@ const SignUp = () => {
     });
   };
 
+  const handleBack = useCallback(() => {
+    router.back();
+  }, [router]);
+
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar
-        hidden={false}
-        backgroundColor="$light"
-        barStyle="dark-content"
-      />
+    <SafeAreaView>
       <KeyboardAvoidingView behavior="padding">
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -103,158 +107,131 @@ const SignUp = () => {
             justifyContent: 'center',
           }}
         >
-          <View style={styles.boxShadow}>
-            <Stack>
-              <Controller
-                name="first_name"
-                control={control}
-                render={({ field: { onChange, ...props } }) => {
-                  return (
-                    <Input
-                      id="first-name"
-                      label="First Name"
-                      mb={20}
-                      onChangeText={onChange}
-                      {...props}
-                    />
-                  );
-                }}
-              />
-              <Controller
-                name="last_name"
-                control={control}
-                render={({ field: { onChange, ...props } }) => {
-                  return (
-                    <Input
-                      id="last-name"
-                      label="Last Name"
-                      mb={20}
-                      onChangeText={onChange}
-                      {...props}
-                    />
-                  );
-                }}
-              />
-              <Controller
-                name="email"
-                control={control}
-                render={({ field: { onChange, ...props } }) => {
-                  return (
-                    <Input
-                      id="email-signup"
-                      label="Email"
-                      mb={20}
-                      onChangeText={onChange}
-                      {...props}
-                    />
-                  );
-                }}
-              />
-              <Controller
-                name="password"
-                control={control}
-                render={({ field: { onChange, ...props } }) => {
-                  return (
-                    <Input
-                      id="password-signup"
-                      label="Password"
-                      mb={20}
-                      onChangeText={onChange}
-                      secureTextEntry
-                      {...props}
-                    />
-                  );
-                }}
-              />
-              <Controller
-                name="confirmPassword"
-                control={control}
-                render={({ field: { onChange, ...props } }) => {
-                  return (
-                    <Input
-                      id="confirm-password"
-                      label="Confirm Password"
-                      height={40}
-                      onChangeText={onChange}
-                      secureTextEntry
-                      {...props}
-                    />
-                  );
-                }}
-              />
-            </Stack>
-            <Stack mt={25}>
-              <View style={styles.buttonBoxShadow}>
-                <Button
-                  variant="primary"
-                  height={56}
-                  onPress={handleSubmit(handleSignUp)}
-                >
-                  Sign up
-                </Button>
-              </View>
-              <Stack flexDirection="row" mt={10}>
-                <Text fontWeight={'600'} color="$primary" fontSize={14} mr={4}>
-                  Already have account?
-                </Text>
-                <Link href={`/(auth)/login`}>
-                  <Text
-                    fontSize={14}
-                    justify="center"
-                    width={'100%'}
-                    color={'$dark'}
-                  >
-                    Sign in
-                  </Text>
+          <YStack px={24}>
+            <XStack items="center" justify="space-between" py={10} mb={16}>
+              <BackIcon onPress={handleBack} />
+              <Text color="$primary" fontWeight={600} fontSize={20}>
+                Create Account
+              </Text>
+              <Stack width={24} height={24} />
+            </XStack>
+            <Controller
+              name="first_name"
+              control={control}
+              render={({ field: { onChange, ...props } }) => {
+                return (
+                  <Input
+                    id="first-name"
+                    label="First Name"
+                    placeholder="John"
+                    mb={20}
+                    onChangeText={onChange}
+                    {...props}
+                  />
+                );
+              }}
+            />
+            <Controller
+              name="last_name"
+              control={control}
+              render={({ field: { onChange, ...props } }) => {
+                return (
+                  <Input
+                    id="last-name"
+                    label="Last Name"
+                    placeholder="Doe"
+                    mb={20}
+                    onChangeText={onChange}
+                    {...props}
+                  />
+                );
+              }}
+            />
+            <Controller
+              name="email"
+              control={control}
+              render={({ field: { onChange, ...props } }) => {
+                return (
+                  <Input
+                    id="email-signup"
+                    label="Email"
+                    placeholder="Example@example.com"
+                    mb={20}
+                    onChangeText={onChange}
+                    {...props}
+                  />
+                );
+              }}
+            />
+            <Controller
+              name="password"
+              control={control}
+              render={({ field: { onChange, ...props } }) => {
+                return (
+                  <Input
+                    id="password"
+                    label="Password"
+                    onChangeText={onChange}
+                    secureTextEntry
+                    {...props}
+                  />
+                );
+              }}
+            />
+            <Controller
+              name="confirmPassword"
+              control={control}
+              render={({ field: { onChange, ...props } }) => {
+                return (
+                  <Input
+                    id="confirm-password"
+                    label="Password"
+                    onChangeText={onChange}
+                    secureTextEntry
+                    {...props}
+                  />
+                );
+              }}
+            />
+            <YStack rowGap={16} items="center" mt={20}>
+              <Text width={250} text="center" fontSize={12}>
+                By continuing, you agree to
+              </Text>
+              <Text fontSize={12} mt={-12}>
+                <Link href={'#'}>
+                  <Text fontWeight={600}>Terms of Use</Text>
+                </Link>{' '}
+                and{' '}
+                <Link href={'#'}>
+                  <Text fontWeight={600}>Privacy Policy.</Text>
                 </Link>
-              </Stack>
-            </Stack>
-          </View>
+              </Text>
+              <Button width={186} onPress={handleSubmit(handleSignUp)}>
+                Sign up
+              </Button>
+              <YStack items="center" rowGap={10}>
+                <Text fontSize={12} fontWeight={300}>
+                  or sign up with
+                </Text>
+                <XStack columnGap={20} mb={10}>
+                  <FacebookIcon onPress={() => {}} />
+                  <GoogleIcon onPress={() => {}} />
+                </XStack>
+                <Text fontSize={12} fontWeight={300}>
+                  {`Don’t have an account? `}
+                  <Link href={'/(auth)/login'}>
+                    <Text ml={4} fontSize={12} color="$secondary">
+                      Log in
+                    </Text>
+                  </Link>
+                </Text>
+              </YStack>
+            </YStack>
+          </YStack>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '$light',
-  },
-  boxShadow: {
-    paddingVertical: 35,
-    paddingLeft: 32,
-    marginRight: 32,
-    backgroundColor: '$light',
-    shadowColor: '$shadowPrimary',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 24,
-    elevation: 15,
-  },
-  buttonBoxShadow: {
-    borderRadius: 8,
-    marginBottom: 10,
-    backgroundColor: '$light',
-    shadowColor: '$shadowSecondary',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 24,
-    elevation: 15,
-  },
-  lineStyle: {
-    width: '35%',
-    borderRadius: 2,
-    height: 1,
-    backgroundColor: '$bgLight',
-  },
-});
 
 export default SignUp;

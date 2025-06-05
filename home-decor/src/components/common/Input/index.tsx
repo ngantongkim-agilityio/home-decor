@@ -8,6 +8,7 @@ import {
   Label,
   Text,
   styled,
+  XStack,
 } from 'tamagui';
 
 interface IInputProps extends InputProps {
@@ -23,15 +24,13 @@ const InputStyled = styled(InputDefault, {
   variants: {
     variant: {
       primary: {
+        borderRadius: 50,
         fontSize: 14,
-        height: 35,
+        height: 41,
         paddingBottom: 10,
-        br: 0,
-        borderTopWidth: 0,
         borderWidth: 0,
-        borderBottomWidth: 2,
-        borderBottomColor: '$border',
-        backgroundColor: 'transparent',
+        backgroundColor: '$tertiary',
+        p: 10,
       },
     },
   } as const,
@@ -43,7 +42,8 @@ const LabelStyled = styled(Label, {
       primary: {
         fontSize: 14,
         lineHeight: 20,
-        color: '$textLight',
+        fontWeight: '500',
+        color: '$dark',
       },
     },
   } as const,

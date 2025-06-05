@@ -4,6 +4,7 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from '@react-navigation/native';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import 'react-native-reanimated';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
@@ -21,11 +22,14 @@ import { tamaguiConfig } from '@/themes/tamagui.config';
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
+  const queryClient = new QueryClient();
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     PoppinsRegular: require('../../assets/fonts/Poppins-Regular.ttf'),
     PoppinsSemiBold: require('../../assets/fonts/Poppins-SemiBold.ttf'),
     PoppinsBold: require('../../assets/fonts/Poppins-Bold.ttf'),
+    LeagueSpartanRegular: require('../../assets/fonts/LeagueSpartan-Regular.ttf'),
+    LeagueSpartanSemiBold: require('../../assets/fonts/LeagueSpartan-SemiBold.ttf'),
   });
 
   useEffect(() => {
@@ -39,18 +43,22 @@ const RootLayout = () => {
   }
 
   return (
-    <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="launch" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
-      </ThemeProvider>
-    </TamaguiProvider>
+    <QueryClientProvider client={queryClient}>
+      <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>
+        <ThemeProvider
+          value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+        >
+          <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="launch" options={{ headerShown: false }} />
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="auto" />
+        </ThemeProvider>
+      </TamaguiProvider>
+    </QueryClientProvider>
   );
 };
 

@@ -3,6 +3,7 @@ import { StyleSheet, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack, Text } from 'tamagui';
 import { useRouter } from 'expo-router';
+import { useShallow } from 'zustand/shallow';
 
 // Components
 import { Header, SearchIcon, LogoutIcon } from '@/components';
@@ -25,7 +26,7 @@ const Profile = () => {
     state.removeAuth,
     state.authKey,
   ]);
-  const [user] = userStore((state) => [state.user]);
+  const [user] = userStore(useShallow((state) => [state.user]));
 
   const { auth_key = '', uuid = '' } = authKey || {};
   const { first_name = '', last_name = '', email = '' } = user || {};

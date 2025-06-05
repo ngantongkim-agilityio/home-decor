@@ -13,7 +13,7 @@ import { PLACEHOLDER_IMAGE, BLUR_HASH } from '@/constants';
 interface ImageProps extends ExpoImageProps {
   source?: string | ImageSource;
   contentFit?: ImageContentFit;
-  width?: number;
+  width?: number | string;
   height?: number;
   containerStyle?: YStackProps;
 }

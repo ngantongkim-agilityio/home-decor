@@ -1,18 +1,18 @@
+import { useCallback } from 'react';
 import {
   KeyboardAvoidingView,
-  StyleSheet,
   useWindowDimensions,
   ScrollView,
-  View,
-  StatusBar,
 } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, Link } from 'expo-router';
+import { useShallow } from 'zustand/shallow';
 
 // Components
-import { Text, Stack } from 'tamagui';
+import { Text, Stack, YStack, H2, XStack } from 'tamagui';
 import { Button, Input } from '@/components';
+import { FacebookIcon, GoogleIcon, BackIcon } from '@/components/icons';
 
 // Types
 import { IUserFormInput, ILoginParams, IResponseApi, IUser } from '@/types';
@@ -30,55 +30,58 @@ interface IForm {
 
 const Login = () => {
   const router = useRouter();
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
+
+  const [setAuthKey] = authStore(useShallow((state) => [state.setAuthKey]));
+  const [setUser] = userStore(useShallow((state) => [state.setUser]));
   const { control, handleSubmit } = useForm<IForm>({
     defaultValues: {
       email: '',
       password: '',
     },
   });
-
-  const [setAuthKey] = authStore((state) => [state.setAuthKey]);
-  const [setUser] = userStore((state) => [state.setUser]);
-
   const {
     logIn: { mutate },
   } = useAuth();
 
-  const handleLogin = ({ email, password }: IUserFormInput) => {
-    const uuid = `${Date.now()}`;
-    const data: ILoginParams<IUserFormInput> = {
-      user: {
-        email,
-        password,
-        uuid,
-        type: 'customer',
-      },
-    };
+  const handleBack = useCallback(() => {
+    router.back();
+  }, [router]);
 
-    mutate(data, {
-      onSuccess: (data: IResponseApi<ILoginParams<IUser>>) => {
-        const { data: authData } = data || {};
-        const { user } = authData || {};
-        const { key } = user || {};
+  const handleLogin = useCallback(
+    ({ email, password }: IUserFormInput) => {
+      console.log('handleLogin', { email, password });
 
-        !!key && setAuthKey({ ...key, uuid });
-        setUser(user);
-        router.navigate(`/(tabs)`);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-    });
-  };
+      const uuid = `${Date.now()}`;
+      const data: ILoginParams<IUserFormInput> = {
+        user: {
+          email,
+          password,
+          uuid,
+          type: 'customer',
+        },
+      };
+
+      mutate(data, {
+        onSuccess: (data: IResponseApi<ILoginParams<IUser>>) => {
+          const { data: authData } = data || {};
+          const { user } = authData || {};
+          const { key } = user || {};
+
+          !!key && setAuthKey({ ...key, uuid });
+          setUser(user);
+          router.navigate(`/(tabs)`);
+        },
+        onError: (error: any) => {
+          console.log(error);
+        },
+      });
+    },
+    [mutate, router, setAuthKey, setUser],
+  );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar
-        hidden={false}
-        backgroundColor="$light"
-        barStyle="dark-content"
-      />
+    <SafeAreaView>
       <KeyboardAvoidingView behavior="padding">
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -88,104 +91,95 @@ const Login = () => {
             justifyContent: 'center',
           }}
         >
-          <View style={styles.boxShadow}>
-            <Stack>
-              <Controller
-                name="email"
-                control={control}
-                render={({ field: { onChange, ...props } }) => {
-                  return (
-                    <Input
-                      id="email"
-                      label="Email"
-                      mb={35}
-                      onChangeText={onChange}
-                      {...props}
-                    />
-                  );
-                }}
-              />
-              <Controller
-                name="password"
-                control={control}
-                render={({ field: { onChange, ...props } }) => {
-                  return (
-                    <Input
-                      id="password"
-                      label="Password"
-                      onChangeText={onChange}
-                      secureTextEntry
-                      {...props}
-                    />
-                  );
-                }}
-              />
-            </Stack>
-            <Stack pt={20} mt={20}>
-              <View style={styles.buttonBoxShadow}>
+          <YStack
+            px={24}
+            flex={1}
+            justify="space-between"
+            height={height - 100}
+          >
+            <YStack rowGap={40}>
+              <XStack items="center" justify="space-between" py={10}>
+                <BackIcon onPress={handleBack} />
+                <Text color="$primary" fontWeight={600} fontSize={20}>
+                  Log In
+                </Text>
+                <Stack width={24} height={24} />
+              </XStack>
+              <YStack rowGap={11} mb={20}>
+                <H2 fontWeight={600} letterSpacing={1} fontSize={24}>
+                  Welcome
+                </H2>
+                <Text fontSize={12}>Please enter your details to proceed.</Text>
+              </YStack>
+              <Stack rowGap={18}>
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field: { onChange, ...props } }) => {
+                    return (
+                      <Input
+                        id="email"
+                        label="Email"
+                        placeholder="example@example.com"
+                        onChangeText={onChange}
+                        {...props}
+                      />
+                    );
+                  }}
+                />
+                <Controller
+                  name="password"
+                  control={control}
+                  render={({ field: { onChange, ...props } }) => {
+                    return (
+                      <Input
+                        id="password"
+                        label="Password"
+                        onChangeText={onChange}
+                        secureTextEntry
+                        {...props}
+                      />
+                    );
+                  }}
+                />
+              </Stack>
+              <YStack items="center" rowGap={18}>
                 <Button
                   variant="primary"
-                  height={56}
-                  justify="center"
-                  items="center"
+                  width={186}
                   onPress={handleSubmit(handleLogin)}
                 >
-                  Log in
+                  Log In
                 </Button>
-              </View>
-              <Link href={'/(auth)/(signup)'}>
-                <Stack width="$full" justify="center" items="center">
-                  <Text fontSize={16}>Sign up</Text>
-                </Stack>
-              </Link>
-            </Stack>
-          </View>
+                <Link href="#">
+                  <Text fontSize={12} fontWeight={600}>
+                    Forgot Password?
+                  </Text>
+                </Link>
+              </YStack>
+            </YStack>
+            <YStack items="center" rowGap={16}>
+              <Text fontSize={12} fontWeight={300}>
+                or sign up with
+              </Text>
+              <XStack columnGap={20} mb={10}>
+                <FacebookIcon onPress={() => {}} />
+                <GoogleIcon onPress={() => {}} />
+              </XStack>
+              <Text fontSize={12} fontWeight={300}>
+                {`Don’t have an account? `}
+                <Link href={'/(auth)/(signup)'}>
+                  <Text ml={4} fontSize={12} color="$secondary">
+                    Sign Up
+                  </Text>
+                </Link>
+              </Text>
+            </YStack>
+          </YStack>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '$light',
-  },
-  boxShadow: {
-    paddingVertical: 20,
-    paddingLeft: 32,
-    marginRight: 32,
-    marginTop: 10,
-    backgroundColor: '$light',
-    shadowColor: '$shadowPrimary',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 24,
-    elevation: 15,
-  },
-  buttonBoxShadow: {
-    borderRadius: 8,
-    marginBottom: 28,
-    backgroundColor: '$light',
-    shadowColor: 'shadowSecondary',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 24,
-    elevation: 15,
-  },
-  lineStyle: {
-    width: '35%',
-    borderRadius: 2,
-    height: 1,
-    backgroundColor: '$bgLight',
-  },
-});
 
 export default Login;
