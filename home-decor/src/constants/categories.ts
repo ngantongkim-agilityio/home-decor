@@ -28,7 +28,7 @@ export const CATEGORIES_DATA = [
     isActive: false,
   },
   {
-    imageSrc: OfficeIcon,
+    imageSrc: KitchenIcon,
     label: 'Office',
     isActive: false,
   },

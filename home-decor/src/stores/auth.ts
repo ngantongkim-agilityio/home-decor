@@ -31,7 +31,7 @@ export const authStore = create(
     (set) => ({
       ...INITIAL_STATE,
       setAuthKey: (authKey: IAuthKey) => {
-        set({ authKey });
+        set((state) => ({ ...state, authKey }));
       },
       setVerifyId: (verify_id: number) => {
         set((state) => ({

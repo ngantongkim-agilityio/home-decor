@@ -4,6 +4,9 @@ import { Image, Text, Stack } from 'tamagui';
 // Types
 import { ICategory } from '@/types';
 
+// Colors
+import { colors } from '@/themes';
+
 interface ICategoryItemProps {
   item: ICategory;
   onPress?: () => void;
@@ -13,22 +16,15 @@ const CategoryItem = ({ item, onPress = () => {} }: ICategoryItemProps) => {
 
   return (
     <TouchableWithoutFeedback onPress={onPress} testID="CategoryItem">
-      <Stack>
-        <Stack
-          width={44}
-          height={44}
-          background={item.isActive ? '$bgDark' : '$bgSecondary'}
-        >
-          <Icon />
-        </Stack>
-        <Text
-          mt={3}
-          fontWeight={item.isActive ? '600' : '400'}
-          color={item.isActive ? '$secondary' : '$textSecondary'}
-          fontSize={14}
-        >
-          {item.label}
-        </Text>
+      <Stack
+        width={66}
+        height={66}
+        bg={item.isActive ? '$primary' : '$tertiary'}
+        items="center"
+        justify="center"
+        borderRadius={10}
+      >
+        <Icon color={item.isActive ? colors.secondary : colors.textTertiary} />
       </Stack>
     </TouchableWithoutFeedback>
   );

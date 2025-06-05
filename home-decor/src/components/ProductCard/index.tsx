@@ -1,7 +1,7 @@
 // Libs
 import { memo } from 'react';
 import { Pressable, StyleSheet, ViewStyle } from 'react-native';
-import { Stack, Image, Text } from 'tamagui';
+import { Stack, Image, Text, Separator } from 'tamagui';
 
 // Types
 import { IProduct } from '@/types';
@@ -12,7 +12,12 @@ interface IProductCardProps {
 }
 
 const ProductCard = ({ product, onPress = () => {} }: IProductCardProps) => {
-  const { title = '', images = [], price = { amount: '' } } = product || {};
+  const {
+    title = '',
+    description = '',
+    images = [],
+    price = { amount: '' },
+  } = product || {};
 
   return (
     <Pressable
@@ -30,11 +35,21 @@ const ProductCard = ({ product, onPress = () => {} }: IProductCardProps) => {
         style={styles.image}
       />
       <Stack my={12}>
-        <Text fontWeight={'400'} color={'$tertiary'} fontSize={14} mb={5}>
+        <Text fontWeight={'600'} color={'$dark'} fontSize={12} mb={5}>
           {title}
         </Text>
-        <Text fontWeight={'700'} color={'$dark'} fontSize={14}>
-          {price.amount}
+        <Text
+          fontWeight={'300'}
+          color={'$dark'}
+          fontSize={11}
+          mb={5}
+          numberOfLines={2}
+        >
+          {description}
+        </Text>
+        <Separator borderColor="$tertiary" mb={8} />
+        <Text fontWeight={'500'} color="$secondary" fontSize={14}>
+          ${price.amount}
         </Text>
       </Stack>
     </Pressable>
@@ -43,7 +58,7 @@ const ProductCard = ({ product, onPress = () => {} }: IProductCardProps) => {
 
 const styles = StyleSheet.create<Record<string, ViewStyle>>({
   container: {
-    // flex: 1 / 2,
+    flex: 1 / 2,
   },
   image: {
     height: 200,

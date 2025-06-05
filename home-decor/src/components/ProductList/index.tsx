@@ -13,6 +13,7 @@ import ProductCard from '../ProductCard';
 
 // Types
 import { IProduct } from '@/types';
+import { H3, YStack } from 'tamagui';
 
 interface IProductListProps {
   products: IProduct[];
@@ -38,18 +39,24 @@ export const ProductList = ({
   };
 
   return (
-    <FlatList
-      data={products}
-      onEndReached={onLoadMore}
-      keyExtractor={getKeyExtractor}
-      renderItem={renderItemProduct}
-      initialNumToRender={4}
-      numColumns={2}
-      columnWrapperStyle={styles.columnProduct}
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
-      showsHorizontalScrollIndicator={false}
-    />
+    <YStack rowGap={18}>
+      <H3 color="$secondary" fontWeight={500} fontSize={18}>
+        New Collection
+      </H3>
+      <FlatList
+        data={products}
+        onEndReached={onLoadMore}
+        keyExtractor={getKeyExtractor}
+        renderItem={renderItemProduct}
+        initialNumToRender={4}
+        numColumns={2}
+        scrollEnabled={false}
+        columnWrapperStyle={styles.columnProduct}
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+      />
+    </YStack>
   );
 };
 

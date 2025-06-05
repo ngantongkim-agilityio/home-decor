@@ -24,19 +24,25 @@ const TabLayout = () => {
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
+        tabBarItemStyle: {
+          padding: 8,
+        },
         tabBarStyle: Platform.select({
           ios: {
             // Use a transparent background on iOS to show the blur effect
             position: 'absolute',
+            paddingHorizontal: 20,
           },
-          default: {},
+          default: {
+            paddingHorizontal: 20,
+          },
         }),
       }}
     >
       <Tabs.Screen
         name="(home)"
         options={{
-          title: 'Home',
+          tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
             <HomeIcon color={focused ? '#363130' : '#f4b5a4'} />
           ),
@@ -45,7 +51,7 @@ const TabLayout = () => {
       <Tabs.Screen
         name="categories"
         options={{
-          title: 'Categories',
+          tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
             <CategoriesIcon color={focused ? '#363130' : '#f4b5a4'} />
           ),
@@ -54,7 +60,7 @@ const TabLayout = () => {
       <Tabs.Screen
         name="cart"
         options={{
-          title: 'Cart',
+          tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
             <CartIcon color={focused ? '#363130' : '#f4b5a4'} />
           ),
@@ -63,7 +69,7 @@ const TabLayout = () => {
       <Tabs.Screen
         name="wishlist"
         options={{
-          title: 'Wishlist',
+          tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
             <WishlistIcon color={focused ? '#363130' : '#f4b5a4'} />
           ),
@@ -72,7 +78,7 @@ const TabLayout = () => {
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
             <ProfileIcon color={focused ? '#363130' : '#f4b5a4'} />
           ),
