@@ -1,5 +1,6 @@
 // Libs
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useShallow } from 'zustand/shallow';
 
 // Constants
 import { ROUTES } from '@/constants';
@@ -15,7 +16,7 @@ import { IResponseApi } from '@/types';
 
 export const useProducts = () => {
   const useFetchProducts = (initPageParam: number) => {
-    const [authKey] = authStore((state) => [state.authKey]);
+    const [authKey] = authStore(useShallow((state) => [state.authKey]));
 
     return useInfiniteQuery({
       queryKey: [ROUTES.PRODUCTS],
@@ -39,5 +40,21 @@ export const useProducts = () => {
       },
     });
   };
-  return { useFetchProducts };
+
+  const useFetchProductDetail = (id: string) => {
+    const [authKey] = authStore(useShallow((state) => [state.authKey]));
+    console.log('useFetchProductDetail', id, authKey);
+
+    return useQuery({
+      queryKey: [id],
+      queryFn: () => {
+        return GET<IResponseApi<any>>(`${ROUTES.PRODUCTS}/${id}`, {
+          headers: {
+            'X-Auth-Key': `${authKey?.auth_key}`,
+          },
+        });
+      },
+    });
+  };
+  return { useFetchProducts, useFetchProductDetail };
 };

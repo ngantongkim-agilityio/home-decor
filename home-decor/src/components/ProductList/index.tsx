@@ -1,19 +1,14 @@
 // Libs
 import { memo } from 'react';
-import {
-  NavigationProp,
-  ParamListBase,
-  useNavigation,
-} from '@react-navigation/native';
 import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { H3, YStack } from 'tamagui';
 
 // Components
 import ProductCard from '../ProductCard';
 
 // Types
 import { IProduct } from '@/types';
-import { H3, YStack } from 'tamagui';
 
 interface IProductListProps {
   products: IProduct[];
@@ -30,7 +25,6 @@ export const ProductList = ({
 
   const renderItemProduct = ({ item }: ListRenderItemInfo<IProduct>) => {
     const handleNavigateProductDetail = (product: IProduct) => {
-      // router.push({ pathname: `/(tabs)/(home)/details/${product.id}` });
       const id = product.id.toString();
       router.push(`/details/${id}`);
     };

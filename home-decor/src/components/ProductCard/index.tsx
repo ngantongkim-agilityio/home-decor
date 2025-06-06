@@ -16,7 +16,7 @@ const ProductCard = ({ product, onPress = () => {} }: IProductCardProps) => {
     title = '',
     description = '',
     images = [],
-    price = { amount: '' },
+    price = { formatted: '' },
   } = product || {};
 
   return (
@@ -49,7 +49,7 @@ const ProductCard = ({ product, onPress = () => {} }: IProductCardProps) => {
         </Text>
         <Separator borderColor="$tertiary" mb={8} />
         <Text fontWeight={'500'} color="$secondary" fontSize={14}>
-          ${price.amount}
+          {price.formatted}
         </Text>
       </Stack>
     </Pressable>
