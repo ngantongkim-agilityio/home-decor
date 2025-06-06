@@ -1,12 +1,13 @@
+import { useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Stack, Text } from 'tamagui';
+import { Circle, Stack, Text, XStack, YStack } from 'tamagui';
 import { useRouter } from 'expo-router';
 import { useShallow } from 'zustand/shallow';
 
 // Components
-import { Header, SearchIcon, LogoutIcon } from '@/components';
+import { LogoutIcon, BackIcon, Image } from '@/components';
 
 // Constants
 import { AUTH_STORE_KEY } from '@/constants';
@@ -22,14 +23,19 @@ import { IQueryParams } from '@/types';
 
 const Profile = () => {
   const router = useRouter();
-  const [removeAuth, authKey] = authStore((state) => [
-    state.removeAuth,
-    state.authKey,
-  ]);
+  const [removeAuth, authKey] = authStore(
+    useShallow((state) => [state.removeAuth, state.authKey]),
+  );
   const [user] = userStore(useShallow((state) => [state.user]));
+  console.log('Profile', user);
 
   const { auth_key = '', uuid = '' } = authKey || {};
-  const { first_name = '', last_name = '', email = '' } = user || {};
+  const {
+    first_name = '',
+    last_name = '',
+    id = '',
+    profile_pic = '',
+  } = user || {};
 
   const {
     logOut: { mutate },
@@ -56,46 +62,48 @@ const Profile = () => {
     }
   };
 
+  const handleBack = useCallback(() => {
+    router.back();
+  }, [router]);
+
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar
-        hidden={false}
-        backgroundColor="$light"
-        barStyle="dark-content"
-      />
-      <Stack width={'100%'}>
-        <Header
-          title="Profile"
-          leftIcon={<SearchIcon />}
-          rightIcon={LogoutIcon}
-          onPressRight={handleLogout}
+      <XStack items="center" justify="space-between" py={10}>
+        <BackIcon onPress={handleBack} />
+        <Text color="$primary" fontWeight={600} fontSize={20}>
+          My Profile
+        </Text>
+        <Stack width={24} height={24} />
+      </XStack>
+      <YStack justify="center" items="center">
+        <Image
+          source={{ uri: profile_pic }}
+          width={148}
+          height={148}
+          borderRadius={100}
         />
-      </Stack>
-      <Stack width={'100%'} mb={35} flexDirection="row">
-        <Stack ml={20}>
-          <Text fontWeight={'700'} color="$dark" fontSize={20}>
-            {first_name} {last_name}
-          </Text>
-          <Text
-            my={10}
-            fontWeight={'400'}
-            color="$primary"
-            fontSize={14}
-            lineHeight={15}
-          >
-            {email}
-          </Text>
-        </Stack>
-      </Stack>
+        <Text fontWeight={'700'} color="$dark" fontSize={22} mt={16}>
+          {first_name} {last_name}
+        </Text>
+        <Text my={10} fontWeight={'600'} fontSize={14} lineHeight={15}>
+          ID: <Text fontWeight={300}>{id}</Text>
+        </Text>
+      </YStack>
+      <XStack items="center" columnGap={10}>
+        <Circle bg="$primary" width={35} height={35} onPress={handleLogout}>
+          <LogoutIcon />
+        </Circle>
+        <Text fontSize={16}>Logout</Text>
+      </XStack>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '$light',
+    paddingHorizontal: 20,
+    rowGap: 20,
   },
 });
 
