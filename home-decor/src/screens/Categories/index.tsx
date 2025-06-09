@@ -1,23 +1,15 @@
-import { StyleSheet, StatusBar } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Stack } from 'tamagui';
-
-// Components
-import { Header } from '@/components';
-
-// Themes
+import { Text, XStack } from 'tamagui';
 
 const Categories = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar
-        hidden={false}
-        backgroundColor="$light"
-        barStyle="dark-content"
-      />
-      <Stack width={'100%'}>
-        <Header title="Categories" />
-      </Stack>
+      <XStack items="center" justify="center" py={10}>
+        <Text color="$primary" fontWeight={600} fontSize={20}>
+          Categories
+        </Text>
+      </XStack>
     </SafeAreaView>
   );
 };

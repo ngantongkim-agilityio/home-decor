@@ -14,3 +14,8 @@ export { default as LogoutIcon } from './LogoutIcon';
 export { default as SearchIcon } from './SearchIcon';
 export { default as FacebookIcon } from './FacebookIcon';
 export { default as GoogleIcon } from './GoogleIcon';
+export { default as OrderIcon } from './OrderIcon';
+export { default as LargeWishlistIcon } from './LargeWishlistIcon';
+export { default as ExtraWishlistIcon } from './ExtraWishlistIcon';
+export { default as LargeProfileIcon } from './LargeProfileIcon';
+export { default as ExtraCardIcon } from './ExtraCardIcon';

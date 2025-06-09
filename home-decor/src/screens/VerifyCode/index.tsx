@@ -1,9 +1,5 @@
 import { useCallback } from 'react';
-import {
-  KeyboardAvoidingView,
-  useWindowDimensions,
-  ScrollView,
-} from 'react-native';
+import { KeyboardAvoidingView, useWindowDimensions } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';

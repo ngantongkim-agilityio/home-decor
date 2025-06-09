@@ -60,37 +60,35 @@ const SignUp = () => {
     signUp: { mutate },
   } = useAuth();
 
-  const handleSignUp = ({
-    first_name,
-    last_name,
-    email,
-    password,
-  }: IUserFormInput) => {
-    const uuid = `${Date.now()}`;
-    const data: ILoginParams<IUserFormInput> = {
-      user: {
-        uuid,
-        first_name,
-        last_name,
-        email,
-        password,
-        type: 'customer',
-      },
-    };
+  const handleSignUp = useCallback(
+    ({ first_name, last_name, email, password }: IUserFormInput) => {
+      const uuid = `${Date.now()}`;
+      const data: ILoginParams<IUserFormInput> = {
+        user: {
+          uuid,
+          first_name,
+          last_name,
+          email,
+          password,
+          type: 'customer',
+        },
+      };
 
-    mutate(data, {
-      onSuccess: (data: IResponseApi<IResponseVerify>) => {
-        const { data: verifyData } = data || {};
-        const { verify_id } = verifyData || {};
+      mutate(data, {
+        onSuccess: (data: IResponseApi<IResponseVerify>) => {
+          const { data: verifyData } = data || {};
+          const { verify_id } = verifyData || {};
 
-        !!verify_id && setVerifyId(verify_id);
-        router.navigate(`/verify-code`);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-    });
-  };
+          !!verify_id && setVerifyId(verify_id);
+          router.navigate(`/verify-code`);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+    },
+    [mutate, router, setVerifyId],
+  );
 
   const handleBack = useCallback(() => {
     router.back();

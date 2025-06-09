@@ -1,15 +1,10 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 // Components
-import {
-  Header,
-  CategoryList,
-  ProductList,
-  SearchIcon,
-  Image,
-} from '@/components';
+import { Circle, H1, H3, H4, Text, XStack, YStack } from 'tamagui';
+import { CategoryList, ProductList, SearchIcon, Image } from '@/components';
 
 // Constants
 import { INIT_PAGE, CATEGORIES_DATA } from '@/constants';
@@ -19,15 +14,19 @@ import { useProducts } from '@/hooks';
 
 // Utils
 import { formatProducts, getProductList } from '@/utils';
-import { Circle, H1, H3, H4, Text, XStack, YStack } from 'tamagui';
 
 const Home = () => {
   const { useFetchProducts } = useProducts();
   const { data, hasNextPage, fetchNextPage } = useFetchProducts(INIT_PAGE);
-  const pages = data?.pages ?? [];
-  const products = (pages.length > 0 && getProductList(pages)) || [];
-  const formattedProducts =
-    (products.length > 0 && formatProducts(products)) || [];
+  const pages = useMemo(() => data?.pages ?? [], [data?.pages]);
+  const products = useMemo(
+    () => (pages.length > 0 && getProductList(pages)) || [],
+    [pages],
+  );
+  const formattedProducts = useMemo(
+    () => (products.length > 0 && formatProducts(products)) || [],
+    [products],
+  );
 
   const handleLoadMore = useCallback(async () => {
     hasNextPage && (await fetchNextPage());

@@ -1,13 +1,19 @@
 import { useCallback } from 'react';
+import { StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StyleSheet, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Circle, Stack, Text, XStack, YStack } from 'tamagui';
 import { useRouter } from 'expo-router';
 import { useShallow } from 'zustand/shallow';
+import { Circle, Text, XStack, YStack } from 'tamagui';
 
 // Components
-import { LogoutIcon, BackIcon, Image } from '@/components';
+import {
+  LogoutIcon,
+  Image,
+  LargeProfileIcon,
+  LargeWishlistIcon,
+  OrderIcon,
+} from '@/components';
 
 // Constants
 import { AUTH_STORE_KEY } from '@/constants';
@@ -26,8 +32,9 @@ const Profile = () => {
   const [removeAuth, authKey] = authStore(
     useShallow((state) => [state.removeAuth, state.authKey]),
   );
-  const [user] = userStore(useShallow((state) => [state.user]));
-  console.log('Profile', user);
+  const [user, removeUser] = userStore(
+    useShallow((state) => [state.user, state.removeUser]),
+  );
 
   const { auth_key = '', uuid = '' } = authKey || {};
   const {
@@ -41,7 +48,7 @@ const Profile = () => {
     logOut: { mutate },
   } = useAuth();
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     const payload: IQueryParams = {
       uuid,
       auth_key,
@@ -53,27 +60,22 @@ const Profile = () => {
     if (!!uuid && !!auth_key) {
       mutate(payload, {
         onSuccess: () => {
-          router.navigate(`/(auth)/login`);
+          removeUser();
+          router.replace(`/launch`);
         },
         onError: (error) => {
           console.log(error);
         },
       });
     }
-  };
-
-  const handleBack = useCallback(() => {
-    router.back();
-  }, [router]);
+  }, [uuid, auth_key, removeAuth, removeUser, router, mutate]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <XStack items="center" justify="space-between" py={10}>
-        <BackIcon onPress={handleBack} />
+      <XStack items="center" justify="center" py={10}>
         <Text color="$primary" fontWeight={600} fontSize={20}>
           My Profile
         </Text>
-        <Stack width={24} height={24} />
       </XStack>
       <YStack justify="center" items="center">
         <Image
@@ -89,8 +91,46 @@ const Profile = () => {
           ID: <Text fontWeight={300}>{id}</Text>
         </Text>
       </YStack>
-      <XStack items="center" columnGap={10}>
-        <Circle bg="$primary" width={35} height={35} onPress={handleLogout}>
+      <XStack
+        bg="$primary"
+        py={14}
+        borderRadius={10}
+        justify="space-between"
+        height={81}
+      >
+        <YStack
+          items="center"
+          justify="space-between"
+          flex={1 / 3}
+          borderRightWidth={1}
+          borderRightColor="$light"
+        >
+          <LargeProfileIcon />
+          <Text fontWeight={300} fontSize={12}>
+            Profile
+          </Text>
+        </YStack>
+        <YStack
+          items="center"
+          justify="space-between"
+          flex={1 / 3}
+          borderRightWidth={1}
+          borderRightColor="$light"
+        >
+          <LargeWishlistIcon />
+          <Text fontWeight={300} fontSize={12}>
+            Wishlist
+          </Text>
+        </YStack>
+        <YStack items="center" justify="space-between" flex={1 / 3}>
+          <OrderIcon />
+          <Text fontWeight={300} fontSize={12}>
+            My Orders
+          </Text>
+        </YStack>
+      </XStack>
+      <XStack items="center" columnGap={10} onPress={handleLogout} px={20}>
+        <Circle bg="$primary" width={35} height={35}>
           <LogoutIcon />
         </Circle>
         <Text fontSize={16}>Logout</Text>

@@ -1,13 +1,11 @@
 import { useCallback, useRef, useState, useMemo } from 'react';
-import { router } from 'expo-router';
 import {
   FlatList,
   ViewToken,
-  StyleSheet,
   ViewabilityConfigCallbackPairs,
   useWindowDimensions,
-  SafeAreaView,
 } from 'react-native';
+import { router } from 'expo-router';
 import { Stack, YStack, H1, Text, XStack, Circle } from 'tamagui';
 
 // Components
@@ -16,9 +14,6 @@ import { Button } from '@/components/common/Button';
 
 // Constants
 import { ONBOARDING_SLIDES } from '@/constants';
-
-// Themes
-import { colors } from '@/themes';
 
 type SlideItem = {
   id: string;
@@ -31,7 +26,7 @@ export const Onboarding = () => {
   const [currentActiveSlide, setCurrentActiveSlide] = useState(0);
   const flatListRef = useRef<FlatList>(null);
 
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const viewabilityConfig = {
     viewAreaCoveragePercentThreshold: 100,
@@ -40,8 +35,6 @@ export const Onboarding = () => {
 
   const onViewableItemsChanged = useCallback(
     ({ changed }: { changed: Array<ViewToken> }) => {
-      console.log('onViewableItemsChanged');
-
       if (
         changed &&
         changed.length > 0 &&

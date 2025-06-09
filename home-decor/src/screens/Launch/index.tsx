@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { router } from 'expo-router';
 import { YStack, Text } from 'tamagui';
 
@@ -6,13 +7,13 @@ import { Button } from '@/components/common/Button';
 import { LogoIcon } from '@/components/icons';
 
 export const Launch = () => {
-  const handleLogin = () => {
+  const handleLogin = useCallback(() => {
     router.navigate(`/login`);
-  };
+  }, []);
 
-  const handleSignup = () => {
+  const handleSignup = useCallback(() => {
     router.navigate(`/(signup)`);
-  };
+  }, []);
 
   return (
     <YStack
