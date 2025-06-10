@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import {
   KeyboardAvoidingView,
   useWindowDimensions,
@@ -8,6 +8,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, Link } from 'expo-router';
 import { useShallow } from 'zustand/shallow';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 // Components
 import { Text, Stack, YStack, H2, XStack } from 'tamagui';
@@ -20,8 +21,14 @@ import { IUserFormInput, ILoginParams, IResponseApi, IUser } from '@/types';
 // Hooks
 import { useAuth } from '@/hooks';
 
+// Constants
+import { ERROR_MESSAGES } from '@/constants';
+
 // Stores
 import { authStore, userStore } from '@/stores';
+
+// Schemas
+import { LoginSchema } from '@/schemas';
 
 interface IForm {
   email: string;
@@ -34,15 +41,23 @@ const Login = () => {
 
   const [setAuthKey] = authStore(useShallow((state) => [state.setAuthKey]));
   const [setUser] = userStore(useShallow((state) => [state.setUser]));
-  const { control, handleSubmit } = useForm<IForm>({
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IForm>({
+    resolver: zodResolver(LoginSchema),
+    mode: 'onSubmit',
     defaultValues: {
       email: '',
       password: '',
     },
   });
   const {
-    logIn: { mutate },
+    logIn: { mutate, isPending },
   } = useAuth();
+  const [error, setError] = useState('');
 
   const handleBack = useCallback(() => {
     router.back();
@@ -50,8 +65,6 @@ const Login = () => {
 
   const handleLogin = useCallback(
     ({ email, password }: IUserFormInput) => {
-      console.log('handleLogin', { email, password });
-
       const uuid = `${Date.now()}`;
       const data: ILoginParams<IUserFormInput> = {
         user: {
@@ -73,7 +86,7 @@ const Login = () => {
           router.navigate(`/(tabs)`);
         },
         onError: (error: any) => {
-          console.log(error);
+          setError(ERROR_MESSAGES.INVALID_CREDENTIALS);
         },
       });
     },
@@ -116,12 +129,18 @@ const Login = () => {
                   name="email"
                   control={control}
                   render={({ field: { onChange, ...props } }) => {
+                    const handleChange = (value: string) => {
+                      onChange(value);
+                      setError('');
+                    };
+
                     return (
                       <Input
                         id="email"
                         label="Email"
                         placeholder="example@example.com"
-                        onChangeText={onChange}
+                        errorMessage={errors.email?.message}
+                        onChangeText={handleChange}
                         {...props}
                       />
                     );
@@ -131,22 +150,34 @@ const Login = () => {
                   name="password"
                   control={control}
                   render={({ field: { onChange, ...props } }) => {
+                    const handleChange = (value: string) => {
+                      onChange(value);
+                      setError('');
+                    };
+
                     return (
                       <Input
                         id="password"
                         label="Password"
-                        onChangeText={onChange}
+                        errorMessage={errors.password?.message}
                         secureTextEntry
+                        onChangeText={handleChange}
                         {...props}
                       />
                     );
                   }}
                 />
+                {error && (
+                  <Text color="$error" fontSize={14}>
+                    {error}
+                  </Text>
+                )}
               </Stack>
               <YStack items="center" rowGap={18}>
                 <Button
                   variant="primary"
                   width={186}
+                  isLoading={isPending}
                   onPress={handleSubmit(handleLogin)}
                 >
                   Log In

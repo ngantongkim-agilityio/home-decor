@@ -18,4 +18,5 @@ export const colors = {
   border: '#e0e0e0',
   shadowPrimary: 'rgba(138 149 158 / 1.0)',
   shadowSecondary: 'rgba(48 48 48 / 1.0)',
+  error: '#e42222',
 };
