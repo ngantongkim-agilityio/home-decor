@@ -1,5 +1,5 @@
-import { useCallback } from 'react';
-import { KeyboardAvoidingView, useWindowDimensions } from 'react-native';
+import { useCallback, useState } from 'react';
+import { KeyboardAvoidingView } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -18,25 +18,28 @@ import { useAuth } from '@/hooks';
 // Stores
 import { authStore } from '@/stores';
 
+// Constants
+import { ERROR_MESSAGES } from '@/constants';
+
 interface IForm {
   code: string;
 }
 
 const VerifyCode = () => {
   const router = useRouter();
-  const { width } = useWindowDimensions();
   const { control, handleSubmit } = useForm<IForm>({
     defaultValues: {
       code: '',
     },
   });
+  const [error, setError] = useState('');
 
   const [verify_id, removeVerifyId] = authStore(
     useShallow((state) => [state.verify_id, state.removeVerifyId]),
   );
 
   const {
-    verifyCode: { mutate },
+    verifyCode: { mutate, isPending },
   } = useAuth();
 
   const handleVerifyCode = useCallback(
@@ -52,7 +55,7 @@ const VerifyCode = () => {
           router.navigate(`/(auth)/login`);
         },
         onError: (error) => {
-          console.log(error);
+          setError(ERROR_MESSAGES.FIELD_INVALID('Code'));
         },
       });
     },
@@ -78,22 +81,32 @@ const VerifyCode = () => {
             name="code"
             control={control}
             render={({ field: { onChange, ...props } }) => {
+              const handleChange = (value: string) => {
+                onChange(value);
+                setError('');
+              };
+
               return (
                 <Input
                   id="code"
                   label="Enter your code"
                   placeholder="123456"
-                  mb={35}
-                  onChangeText={onChange}
+                  onChangeText={handleChange}
                   {...props}
                 />
               );
             }}
           />
-          <Stack items="center">
+          {error && (
+            <Text color="$error" fontSize={14} mt={10}>
+              {error}
+            </Text>
+          )}
+          <Stack items="center" mt={35}>
             <Button
               title="Submit"
               width={186}
+              isLoading={isPending}
               onPress={handleSubmit(handleVerifyCode)}
             />
           </Stack>

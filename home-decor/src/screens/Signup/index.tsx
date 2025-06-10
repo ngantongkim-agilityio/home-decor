@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import {
   KeyboardAvoidingView,
   useWindowDimensions,
@@ -32,10 +32,13 @@ import { useAuth } from '@/hooks';
 
 // Stores
 import { authStore } from '@/stores';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { SignupSchema } from '@/schemas';
+import { ERROR_MESSAGES } from '@/constants';
 
 interface IForm {
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -44,30 +47,37 @@ interface IForm {
 const SignUp = () => {
   const router = useRouter();
   const { width } = useWindowDimensions();
-  const { control, handleSubmit } = useForm<IForm>({
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IForm>({
+    resolver: zodResolver(SignupSchema),
+    mode: 'onSubmit',
     defaultValues: {
-      first_name: '',
-      last_name: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
       confirmPassword: '',
     },
   });
-
+  const [error, setError] = useState('');
   const [setVerifyId] = authStore(useShallow((state) => [state.setVerifyId]));
 
   const {
-    signUp: { mutate },
+    signUp: { mutate, isPending },
   } = useAuth();
 
   const handleSignUp = useCallback(
-    ({ first_name, last_name, email, password }: IUserFormInput) => {
+    ({ firstName, lastName, email, password }: IUserFormInput) => {
       const uuid = `${Date.now()}`;
-      const data: ILoginParams<IUserFormInput> = {
+      const data: ILoginParams<any> = {
         user: {
           uuid,
-          first_name,
-          last_name,
+          first_name: firstName,
+          last_name: lastName,
           email,
           password,
           type: 'customer',
@@ -83,12 +93,21 @@ const SignUp = () => {
           router.navigate(`/verify-code`);
         },
         onError: (error) => {
-          console.log(error);
+          console.error(error);
+          setError(ERROR_MESSAGES.USER_EXISTS);
         },
       });
     },
     [mutate, router, setVerifyId],
   );
+
+  const handleChangeInput = (
+    value: string,
+    onChange: (text: string) => void,
+  ) => {
+    onChange(value);
+    setError('');
+  };
 
   const handleBack = useCallback(() => {
     router.back();
@@ -113,84 +132,95 @@ const SignUp = () => {
               </Text>
               <Stack width={24} height={24} />
             </XStack>
-            <Controller
-              name="first_name"
-              control={control}
-              render={({ field: { onChange, ...props } }) => {
-                return (
-                  <Input
-                    id="first-name"
-                    label="First Name"
-                    placeholder="John"
-                    mb={20}
-                    onChangeText={onChange}
-                    {...props}
-                  />
-                );
-              }}
-            />
-            <Controller
-              name="last_name"
-              control={control}
-              render={({ field: { onChange, ...props } }) => {
-                return (
-                  <Input
-                    id="last-name"
-                    label="Last Name"
-                    placeholder="Doe"
-                    mb={20}
-                    onChangeText={onChange}
-                    {...props}
-                  />
-                );
-              }}
-            />
-            <Controller
-              name="email"
-              control={control}
-              render={({ field: { onChange, ...props } }) => {
-                return (
-                  <Input
-                    id="email-signup"
-                    label="Email"
-                    placeholder="Example@example.com"
-                    mb={20}
-                    onChangeText={onChange}
-                    {...props}
-                  />
-                );
-              }}
-            />
-            <Controller
-              name="password"
-              control={control}
-              render={({ field: { onChange, ...props } }) => {
-                return (
-                  <Input
-                    id="password"
-                    label="Password"
-                    onChangeText={onChange}
-                    secureTextEntry
-                    {...props}
-                  />
-                );
-              }}
-            />
-            <Controller
-              name="confirmPassword"
-              control={control}
-              render={({ field: { onChange, ...props } }) => {
-                return (
-                  <Input
-                    id="confirm-password"
-                    label="Password"
-                    onChangeText={onChange}
-                    secureTextEntry
-                    {...props}
-                  />
-                );
-              }}
-            />
+            <YStack rowGap={18}>
+              <Controller
+                name="firstName"
+                control={control}
+                render={({ field: { onChange, ...props } }) => {
+                  return (
+                    <Input
+                      id="first-name"
+                      label="First Name"
+                      placeholder="John"
+                      errorMessage={errors.firstName?.message}
+                      onChangeText={(text) => handleChangeInput(text, onChange)}
+                      {...props}
+                    />
+                  );
+                }}
+              />
+              <Controller
+                name="lastName"
+                control={control}
+                render={({ field: { onChange, ...props } }) => {
+                  return (
+                    <Input
+                      id="last-name"
+                      label="Last Name"
+                      placeholder="Doe"
+                      errorMessage={errors.lastName?.message}
+                      onChangeText={(text) => handleChangeInput(text, onChange)}
+                      {...props}
+                    />
+                  );
+                }}
+              />
+              <Controller
+                name="email"
+                control={control}
+                render={({ field: { onChange, ...props } }) => {
+                  return (
+                    <Input
+                      id="email-signup"
+                      label="Email"
+                      placeholder="Example@example.com"
+                      errorMessage={errors.email?.message}
+                      onChangeText={(text) => handleChangeInput(text, onChange)}
+                      {...props}
+                    />
+                  );
+                }}
+              />
+              <Controller
+                name="password"
+                control={control}
+                render={({ field: { onChange, ...props } }) => {
+                  return (
+                    <Input
+                      id="password"
+                      label="Password"
+                      placeholder="********"
+                      secureTextEntry
+                      errorMessage={errors.password?.message}
+                      onChangeText={(text) => handleChangeInput(text, onChange)}
+                      {...props}
+                    />
+                  );
+                }}
+              />
+              <Controller
+                name="confirmPassword"
+                control={control}
+                render={({ field: { onChange, ...props } }) => {
+                  return (
+                    <Input
+                      id="confirm-password"
+                      label="Confirm Password"
+                      placeholder="********"
+                      secureTextEntry
+                      errorMessage={errors.confirmPassword?.message}
+                      onChangeText={(text) => handleChangeInput(text, onChange)}
+                      {...props}
+                    />
+                  );
+                }}
+              />
+              {error && (
+                <Text color="$error" fontSize={14}>
+                  {error}
+                </Text>
+              )}
+            </YStack>
             <YStack rowGap={16} items="center" mt={20}>
               <Text width={250} text="center" fontSize={12}>
                 By continuing, you agree to
@@ -204,7 +234,11 @@ const SignUp = () => {
                   <Text fontWeight={600}>Privacy Policy.</Text>
                 </Link>
               </Text>
-              <Button width={186} onPress={handleSubmit(handleSignUp)}>
+              <Button
+                width={186}
+                isLoading={isPending}
+                onPress={handleSubmit(handleSignUp)}
+              >
                 Sign up
               </Button>
               <YStack items="center" rowGap={10}>
