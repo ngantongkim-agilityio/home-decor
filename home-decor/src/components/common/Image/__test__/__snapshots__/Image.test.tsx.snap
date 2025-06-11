@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Image Component Should render to match snapshot 1`] = `
+<View
+  style={
+    {
+      "flexDirection": "column",
+    }
+  }
+>
+  <View
+    style={
+      {
+        "height": 160,
+        "overflow": "hidden",
+        "width": 140,
+      }
+    }
+  >
+    <ViewManagerAdapter_ExpoImage
+      containerViewRef={"[React.ref]"}
+      contentFit="cover"
+      contentPosition={
+        {
+          "left": "50%",
+          "top": "50%",
+        }
+      }
+      height={160}
+      nativeViewRef={"[React.ref]"}
+      onError={[Function]}
+      onLoad={[Function]}
+      onLoadStart={[Function]}
+      onProgress={[Function]}
+      placeholder={
+        [
+          {
+            "BLUR_HASH": "|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[",
+          },
+        ]
+      }
+      source={
+        [
+          {
+            "testUri": "../../../../../../assets/images/placeholder.png",
+          },
+        ]
+      }
+      style={
+        {
+          "height": 160,
+          "width": 140,
+        }
+      }
+      transition={null}
+      width={140}
+    />
+  </View>
+</View>
+`;

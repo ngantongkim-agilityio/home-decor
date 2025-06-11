@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input Component Should render to match snapshot 1`] = `
+<View
+  style={[]}
+>
+  <TextInput
+    aria-label=""
+    focusVisibleStyle={{}}
+    focusable={true}
+    id="test-input"
+    onBlur={[Function]}
+    onChangeText={[Function]}
+    onFocus={[Function]}
+    placeholder=""
+    placeholderTextColor="#c0c0c0"
+    readOnly={false}
+    style={
+      {
+        "backgroundColor": "#f0e1d2",
+        "borderBottomColor": {
+          "dynamic": {
+            "dark": "hsla(0, 0%, 16%, 1)",
+            "light": "hsla(0, 0%, 88%, 1)",
+          },
+        },
+        "borderBottomLeftRadius": 50,
+        "borderBottomRightRadius": 50,
+        "borderBottomWidth": 0,
+        "borderLeftColor": {
+          "dynamic": {
+            "dark": "hsla(0, 0%, 16%, 1)",
+            "light": "hsla(0, 0%, 88%, 1)",
+          },
+        },
+        "borderLeftWidth": 0,
+        "borderRightColor": {
+          "dynamic": {
+            "dark": "hsla(0, 0%, 16%, 1)",
+            "light": "hsla(0, 0%, 88%, 1)",
+          },
+        },
+        "borderRightWidth": 0,
+        "borderStyle": "solid",
+        "borderTopColor": {
+          "dynamic": {
+            "dark": "hsla(0, 0%, 16%, 1)",
+            "light": "hsla(0, 0%, 88%, 1)",
+          },
+        },
+        "borderTopLeftRadius": 50,
+        "borderTopRightRadius": 50,
+        "borderTopWidth": 0,
+        "color": {
+          "dynamic": {
+            "dark": "hsla(0, 0%, 100%, 1)",
+            "light": "hsla(0, 0%, 9%, 1)",
+          },
+        },
+        "fontFamily": "$body",
+        "fontSize": 14,
+        "height": 41,
+        "minWidth": 0,
+        "paddingBottom": 10,
+        "paddingLeft": 10,
+        "paddingRight": 10,
+        "paddingTop": 10,
+      }
+    }
+  />
+</View>
+`;

@@ -1,5 +1,6 @@
 import { ComponentProps, ReactNode, forwardRef, memo } from 'react';
-import { Spinner, XStack } from 'tamagui';
+import { Spinner, XStack, Button as BaseButton } from 'tamagui';
+import { TouchableOpacity } from 'react-native';
 import {
   styled,
   createStyledContext,
@@ -9,7 +10,6 @@ import { Text } from '../Text';
 
 const ButtonContext = createStyledContext({
   variant: 'primary',
-  disabled: null,
 });
 
 const ButtonFrame = styled(XStack, {
@@ -127,7 +127,7 @@ const ButtonIcon = styled(
     },
   },
   {
-    inlineProps: new Set(['width', 'height', 'color', 'disabled']),
+    inlineProps: new Set(['width', 'height', 'color']),
     accept: { color: 'color' } as const,
   },
 );
@@ -138,44 +138,37 @@ const ButtonWrapper = withStaticProperties(ButtonFrame, {
 });
 
 interface ButtonProps extends ComponentProps<typeof ButtonWrapper> {
-  title?: string;
   isLoading?: boolean;
+  title?: string;
   icon?: ReactNode;
+  onPress: () => void;
 }
 
-const ButtonBase = forwardRef(
-  (
-    {
-      icon,
-      isLoading,
-      disabled,
-      title,
-      children,
-      onPress,
-      ...props
-    }: ButtonProps,
-    ref,
-  ) => {
-    const isDisabled = isLoading || disabled;
+const ButtonBase = ({
+  icon,
+  isLoading,
+  disabled,
+  title,
+  children,
+  onPress,
+  ...props
+}: ButtonProps) => {
+  const isDisabled = isLoading || disabled;
 
-    return (
-      <ButtonWrapper
-        testID="button"
-        disabled={isDisabled}
-        onPress={onPress}
-        {...props}
-      >
+  return (
+    <ButtonWrapper disabled={isDisabled} {...props}>
+      <TouchableOpacity disabled={isDisabled} onPress={onPress}>
         {icon && <ButtonWrapper.Icon>{icon}</ButtonWrapper.Icon>}
         {isLoading ? (
-          <Spinner size="small" />
+          <Spinner testID="loading" size="small" />
         ) : (
           <ButtonWrapper.Text disabled={isDisabled}>
             {title || children}
           </ButtonWrapper.Text>
         )}
-      </ButtonWrapper>
-    );
-  },
-);
+      </TouchableOpacity>
+    </ButtonWrapper>
+  );
+};
 
 export const Button = memo(ButtonBase);

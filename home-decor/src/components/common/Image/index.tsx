@@ -8,18 +8,18 @@ import {
 import { View, YStack, YStackProps } from 'tamagui';
 
 // Constants
-import { PLACEHOLDER_IMAGE, BLUR_HASH } from '@/constants';
+import { DEFAULT_IMAGE, BLUR_HASH } from '@/constants';
 
 interface ImageProps extends ExpoImageProps {
   source?: string | ImageSource;
   contentFit?: ImageContentFit;
-  width?: number | string;
+  width?: number;
   height?: number;
   containerStyle?: YStackProps;
 }
 
 export const Image = ({
-  source = PLACEHOLDER_IMAGE,
+  source = DEFAULT_IMAGE,
   contentFit = 'cover',
   width = 140,
   height = 160,
@@ -33,7 +33,7 @@ export const Image = ({
   const imageSource = errorSource || source;
 
   const handleError = useCallback(() => {
-    setErrorSource(PLACEHOLDER_IMAGE);
+    setErrorSource(DEFAULT_IMAGE);
   }, []);
 
   return (

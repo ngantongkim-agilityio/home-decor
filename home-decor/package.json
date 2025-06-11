@@ -8,6 +8,8 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "test": "jest --passWithNoTests",
+    "coverage": "jest --coverage",
+    "updateSnapshots": "jest -u",
     "lint": "expo lint",
     "prepare": "cd .. && husky home-decor/.husky"
   },

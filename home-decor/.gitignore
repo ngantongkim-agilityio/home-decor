@@ -39,4 +39,5 @@ app-example
 ios
 android
 .env
+coverage
 

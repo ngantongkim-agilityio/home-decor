@@ -8,7 +8,6 @@ import {
   Label,
   Text,
   styled,
-  XStack,
 } from 'tamagui';
 
 interface IInputProps extends InputProps {
