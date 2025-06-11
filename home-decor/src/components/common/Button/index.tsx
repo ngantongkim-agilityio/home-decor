@@ -1,16 +1,9 @@
-import {
-  ComponentProps,
-  ReactNode,
-  forwardRef,
-  memo,
-  useCallback,
-} from 'react';
+import { ComponentProps, ReactNode, forwardRef, memo } from 'react';
 import { Spinner, XStack } from 'tamagui';
 import {
   styled,
   createStyledContext,
   withStaticProperties,
-  GestureReponderEvent,
 } from '@tamagui/core';
 import { Text } from '../Text';
 
@@ -29,7 +22,9 @@ const ButtonFrame = styled(XStack, {
   justify: 'center',
   items: 'center',
   gap: '$2.5',
-
+  disabledStyle: {
+    opacity: 0.5,
+  },
   variants: {
     variant: {
       primary: {
@@ -163,16 +158,13 @@ const ButtonBase = forwardRef(
   ) => {
     const isDisabled = isLoading || disabled;
 
-    const handlePress = useCallback(
-      (event: GestureReponderEvent) => {
-        event.persist();
-        requestAnimationFrame(() => onPress?.(event));
-      },
-      [onPress],
-    );
-
     return (
-      <ButtonWrapper disabled={isDisabled} onPress={handlePress} {...props}>
+      <ButtonWrapper
+        testID="button"
+        disabled={isDisabled}
+        onPress={onPress}
+        {...props}
+      >
         {icon && <ButtonWrapper.Icon>{icon}</ButtonWrapper.Icon>}
         {isLoading ? (
           <Spinner size="small" />
