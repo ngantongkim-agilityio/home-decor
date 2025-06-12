@@ -8,16 +8,20 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import 'react-native-reanimated';
 import { useFonts } from 'expo-font';
 import { Stack, router } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { TamaguiProvider } from 'tamagui';
+import * as SplashScreen from 'expo-splash-screen';
 import * as Notifications from 'expo-notifications';
+
+// Providers
+import { TamaguiProvider } from 'tamagui';
 
 // Hooks
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 // Config
 import { tamaguiConfig } from '@/themes/tamagui.config';
+
+// Utils
 import { requestPermissionsNotifications } from '@/utils';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
