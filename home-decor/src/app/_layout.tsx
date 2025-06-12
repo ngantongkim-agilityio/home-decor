@@ -7,16 +7,18 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import 'react-native-reanimated';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { TamaguiProvider } from 'tamagui';
+import * as Notifications from 'expo-notifications';
 
 // Hooks
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 // Config
 import { tamaguiConfig } from '@/themes/tamagui.config';
+import { requestPermissionsNotifications } from '@/utils';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -31,6 +33,20 @@ const RootLayout = () => {
     LeagueSpartanRegular: require('../../assets/fonts/LeagueSpartan-Regular.ttf'),
     LeagueSpartanSemiBold: require('../../assets/fonts/LeagueSpartan-SemiBold.ttf'),
   });
+
+  useEffect(() => {
+    requestPermissionsNotifications();
+    const subscription = Notifications.addNotificationResponseReceivedListener(
+      (response: Notifications.NotificationResponse) => {
+        const url = response.notification.request.content.data?.url;
+        if (url) {
+          router.push(url);
+        }
+      },
+    );
+
+    return () => subscription.remove();
+  }, []);
 
   useEffect(() => {
     if (loaded) {

@@ -12,6 +12,7 @@ import { Button, Image } from '@/components';
 
 // Hooks
 import { useProducts } from '@/hooks';
+import { scheduleNotification } from '@/utils';
 
 const ProductDetail = () => {
   const { id } = useLocalSearchParams();
@@ -57,6 +58,13 @@ const ProductDetail = () => {
     router.back();
   }, [router]);
 
+  const handleAddToCart = useCallback(async () => {
+    await scheduleNotification({
+      id: id as string,
+      body: 'Product added to cart successfully!',
+    });
+  }, [id]);
+
   return (
     <SafeAreaView>
       <ScrollView
@@ -93,7 +101,9 @@ const ProductDetail = () => {
           </YStack>
 
           <XStack justify="center" mt={50}>
-            <Button width={207}>Add To Cart</Button>
+            <Button width={207} onPress={handleAddToCart}>
+              Add To Cart
+            </Button>
           </XStack>
         </YStack>
       </ScrollView>

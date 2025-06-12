@@ -156,8 +156,8 @@ const ButtonBase = ({
   const isDisabled = isLoading || disabled;
 
   return (
-    <ButtonWrapper disabled={isDisabled} {...props}>
-      <TouchableOpacity disabled={isDisabled} onPress={onPress}>
+    <TouchableOpacity disabled={isDisabled} onPress={onPress}>
+      <ButtonWrapper disabled={isDisabled} {...props}>
         {icon && <ButtonWrapper.Icon>{icon}</ButtonWrapper.Icon>}
         {isLoading ? (
           <Spinner testID="loading" size="small" />
@@ -166,8 +166,8 @@ const ButtonBase = ({
             {title || children}
           </ButtonWrapper.Text>
         )}
-      </TouchableOpacity>
-    </ButtonWrapper>
+      </ButtonWrapper>
+    </TouchableOpacity>
   );
 };
 

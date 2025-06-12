@@ -43,7 +43,6 @@ export const useProducts = () => {
 
   const useFetchProductDetail = (id: string) => {
     const [authKey] = authStore(useShallow((state) => [state.authKey]));
-    console.log('useFetchProductDetail', id, authKey);
 
     return useQuery({
       queryKey: [id],

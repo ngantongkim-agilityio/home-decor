@@ -37,6 +37,15 @@
           "resizeMode": "contain",
           "backgroundColor": "#f4b5a4"
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/notification-icon.png", // only for Android
+          "color": "#363130", // only for Android
+          "defaultChannel": "default", // only for Android
+          "enableBackgroundRemoteNotifications": false // only for iOS
+        }
       ]
     ],
     "experiments": {
