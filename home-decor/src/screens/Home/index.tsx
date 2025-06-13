@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform, useColorScheme } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 // Components
@@ -15,7 +16,12 @@ import { useProducts } from '@/hooks';
 // Utils
 import { formatProducts, getProductList } from '@/utils';
 
+// Themes
+import { systemThemes } from '@/themes';
+
 const Home = () => {
+  const isAndroid = Platform.OS === 'android';
+  const colorScheme = useColorScheme();
   const { useFetchProducts } = useProducts();
   const { data, hasNextPage, fetchNextPage } = useFetchProducts(INIT_PAGE);
   const pages = useMemo(() => data?.pages ?? [], [data?.pages]);
@@ -34,6 +40,10 @@ const Home = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar
+        backgroundColor={systemThemes[colorScheme ?? 'light'].bgPrimary}
+        style={colorScheme === 'light' ? 'dark' : 'light'}
+      />
       <YStack flex={1}>
         <XStack justify="space-between" py={24} bg="$bgPrimary" px={20}>
           <YStack>
@@ -58,7 +68,7 @@ const Home = () => {
           bg="$bgPrimary"
           style={styles.listContainer}
         >
-          <YStack rowGap={24}>
+          <YStack rowGap={24} mb={isAndroid ? 0 : 50}>
             <Image
               source={require('@/assets/images/banner.png')}
               width="100%"
@@ -110,7 +120,6 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex: 1,
-    marginBottom: 50,
     paddingHorizontal: 20,
   },
 });

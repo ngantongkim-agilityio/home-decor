@@ -23,11 +23,11 @@ export const colors = {
   error: '#e42222',
 };
 
-const lightTheme = {
+export const lightTheme = {
   ...colors,
 };
 
-const darkTheme = {
+export const darkTheme = {
   ...colors,
   textPrimary: '#ffffff',
   textSecondary: '#ffffff',

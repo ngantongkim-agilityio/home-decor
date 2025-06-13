@@ -32,4 +32,9 @@ export const CATEGORIES_DATA = [
     label: 'Office',
     isActive: false,
   },
+  {
+    imageSrc: KitchenIcon,
+    label: 'Officeee',
+    isActive: false,
+  },
 ];

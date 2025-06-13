@@ -3,7 +3,6 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
-import { Colors } from '@/constants/Colors';
 import {
   HomeIcon,
   CategoriesIcon,
@@ -13,15 +12,14 @@ import {
 } from '@/components';
 
 const TabLayout = () => {
-  const colorScheme = useColorScheme();
+  const isAndroid = Platform.OS === 'android';
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
         tabBarItemStyle: {
-          padding: 8,
+          padding: isAndroid ? 4 : 8,
         },
         tabBarStyle: Platform.select({
           ios: {
@@ -30,7 +28,7 @@ const TabLayout = () => {
             paddingHorizontal: 20,
           },
           default: {
-            paddingHorizontal: 20,
+            paddingHorizontal: 30,
           },
         }),
       }}

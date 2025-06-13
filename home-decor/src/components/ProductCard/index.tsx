@@ -62,7 +62,7 @@ const styles = StyleSheet.create<Record<string, ViewStyle>>({
   },
   image: {
     height: 200,
-    width: 150,
+    width: '100%',
     borderRadius: 8,
   },
 });
