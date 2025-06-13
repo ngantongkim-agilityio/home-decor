@@ -114,155 +114,157 @@ const SignUp = () => {
   }, [router]);
 
   return (
-    <SafeAreaView>
-      <KeyboardAvoidingView behavior="padding">
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            flexGrow: 1,
-            width,
-            justifyContent: 'center',
-          }}
-        >
-          <YStack px={24}>
-            <XStack items="center" justify="space-between" py={10} mb={16}>
-              <BackIcon onPress={handleBack} />
-              <Text color="$primary" fontWeight={600} fontSize={20}>
-                Create Account
+    <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          flexGrow: 1,
+          width,
+          justifyContent: 'center',
+        }}
+      >
+        <YStack flex={1} px={24} py={40} bg="$bgPrimary">
+          <XStack items="center" justify="space-between" py={10} mb={16}>
+            <BackIcon onPress={handleBack} />
+            <Text color="$primary" fontWeight={600} fontSize={20}>
+              Create Account
+            </Text>
+            <Stack width={24} height={24} />
+          </XStack>
+          <YStack rowGap={18}>
+            <Controller
+              name="firstName"
+              control={control}
+              render={({ field: { onChange, ...props } }) => {
+                return (
+                  <Input
+                    id="first-name"
+                    label="First Name"
+                    placeholder="John"
+                    errorMessage={errors.firstName?.message}
+                    onChangeText={(text) => handleChangeInput(text, onChange)}
+                    {...props}
+                  />
+                );
+              }}
+            />
+            <Controller
+              name="lastName"
+              control={control}
+              render={({ field: { onChange, ...props } }) => {
+                return (
+                  <Input
+                    id="last-name"
+                    label="Last Name"
+                    placeholder="Doe"
+                    errorMessage={errors.lastName?.message}
+                    onChangeText={(text) => handleChangeInput(text, onChange)}
+                    {...props}
+                  />
+                );
+              }}
+            />
+            <Controller
+              name="email"
+              control={control}
+              render={({ field: { onChange, ...props } }) => {
+                return (
+                  <Input
+                    id="email-signup"
+                    label="Email"
+                    placeholder="Example@example.com"
+                    errorMessage={errors.email?.message}
+                    onChangeText={(text) => handleChangeInput(text, onChange)}
+                    {...props}
+                  />
+                );
+              }}
+            />
+            <Controller
+              name="password"
+              control={control}
+              render={({ field: { onChange, ...props } }) => {
+                return (
+                  <Input
+                    id="password"
+                    label="Password"
+                    placeholder="********"
+                    secureTextEntry
+                    errorMessage={errors.password?.message}
+                    onChangeText={(text) => handleChangeInput(text, onChange)}
+                    {...props}
+                  />
+                );
+              }}
+            />
+            <Controller
+              name="confirmPassword"
+              control={control}
+              render={({ field: { onChange, ...props } }) => {
+                return (
+                  <Input
+                    id="confirm-password"
+                    label="Confirm Password"
+                    placeholder="********"
+                    secureTextEntry
+                    errorMessage={errors.confirmPassword?.message}
+                    onChangeText={(text) => handleChangeInput(text, onChange)}
+                    {...props}
+                  />
+                );
+              }}
+            />
+            {error && (
+              <Text color="$error" fontSize={14}>
+                {error}
               </Text>
-              <Stack width={24} height={24} />
-            </XStack>
-            <YStack rowGap={18}>
-              <Controller
-                name="firstName"
-                control={control}
-                render={({ field: { onChange, ...props } }) => {
-                  return (
-                    <Input
-                      id="first-name"
-                      label="First Name"
-                      placeholder="John"
-                      errorMessage={errors.firstName?.message}
-                      onChangeText={(text) => handleChangeInput(text, onChange)}
-                      {...props}
-                    />
-                  );
-                }}
-              />
-              <Controller
-                name="lastName"
-                control={control}
-                render={({ field: { onChange, ...props } }) => {
-                  return (
-                    <Input
-                      id="last-name"
-                      label="Last Name"
-                      placeholder="Doe"
-                      errorMessage={errors.lastName?.message}
-                      onChangeText={(text) => handleChangeInput(text, onChange)}
-                      {...props}
-                    />
-                  );
-                }}
-              />
-              <Controller
-                name="email"
-                control={control}
-                render={({ field: { onChange, ...props } }) => {
-                  return (
-                    <Input
-                      id="email-signup"
-                      label="Email"
-                      placeholder="Example@example.com"
-                      errorMessage={errors.email?.message}
-                      onChangeText={(text) => handleChangeInput(text, onChange)}
-                      {...props}
-                    />
-                  );
-                }}
-              />
-              <Controller
-                name="password"
-                control={control}
-                render={({ field: { onChange, ...props } }) => {
-                  return (
-                    <Input
-                      id="password"
-                      label="Password"
-                      placeholder="********"
-                      secureTextEntry
-                      errorMessage={errors.password?.message}
-                      onChangeText={(text) => handleChangeInput(text, onChange)}
-                      {...props}
-                    />
-                  );
-                }}
-              />
-              <Controller
-                name="confirmPassword"
-                control={control}
-                render={({ field: { onChange, ...props } }) => {
-                  return (
-                    <Input
-                      id="confirm-password"
-                      label="Confirm Password"
-                      placeholder="********"
-                      secureTextEntry
-                      errorMessage={errors.confirmPassword?.message}
-                      onChangeText={(text) => handleChangeInput(text, onChange)}
-                      {...props}
-                    />
-                  );
-                }}
-              />
-              {error && (
-                <Text color="$error" fontSize={14}>
-                  {error}
+            )}
+          </YStack>
+          <YStack rowGap={16} items="center" mt={20}>
+            <Text width={250} text="center" fontSize={12} color="$textPrimary">
+              By continuing, you agree to
+            </Text>
+            <Text fontSize={12} mt={-12} color="$textPrimary">
+              <Link href={'#'}>
+                <Text fontWeight={600} color="$textTertiary">
+                  Terms of Use
                 </Text>
-              )}
-            </YStack>
-            <YStack rowGap={16} items="center" mt={20}>
-              <Text width={250} text="center" fontSize={12}>
-                By continuing, you agree to
+              </Link>{' '}
+              and{' '}
+              <Link href={'#'}>
+                <Text fontWeight={600} color="$textTertiary">
+                  Privacy Policy.
+                </Text>
+              </Link>
+            </Text>
+            <Button
+              width={186}
+              isLoading={isPending}
+              onPress={handleSubmit(handleSignUp)}
+            >
+              Sign up
+            </Button>
+            <YStack items="center" rowGap={10} mt={16}>
+              <Text fontSize={12} fontWeight={300} color="$textPrimary">
+                or sign up with
               </Text>
-              <Text fontSize={12} mt={-12}>
-                <Link href={'#'}>
-                  <Text fontWeight={600}>Terms of Use</Text>
-                </Link>{' '}
-                and{' '}
-                <Link href={'#'}>
-                  <Text fontWeight={600}>Privacy Policy.</Text>
+              <XStack columnGap={20} mb={10}>
+                <FacebookIcon onPress={() => {}} />
+                <GoogleIcon onPress={() => {}} />
+              </XStack>
+              <Text fontSize={12} fontWeight={300} color="$textPrimary">
+                {`Don’t have an account? `}
+                <Link href={'/(auth)/login'}>
+                  <Text ml={4} fontSize={12} color="$secondary">
+                    Log in
+                  </Text>
                 </Link>
               </Text>
-              <Button
-                width={186}
-                isLoading={isPending}
-                onPress={handleSubmit(handleSignUp)}
-              >
-                Sign up
-              </Button>
-              <YStack items="center" rowGap={10}>
-                <Text fontSize={12} fontWeight={300}>
-                  or sign up with
-                </Text>
-                <XStack columnGap={20} mb={10}>
-                  <FacebookIcon onPress={() => {}} />
-                  <GoogleIcon onPress={() => {}} />
-                </XStack>
-                <Text fontSize={12} fontWeight={300}>
-                  {`Don’t have an account? `}
-                  <Link href={'/(auth)/login'}>
-                    <Text ml={4} fontSize={12} color="$secondary">
-                      Log in
-                    </Text>
-                  </Link>
-                </Text>
-              </YStack>
             </YStack>
           </YStack>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+        </YStack>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

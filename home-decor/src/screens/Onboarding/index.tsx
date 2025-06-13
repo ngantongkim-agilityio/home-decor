@@ -71,7 +71,7 @@ export const Onboarding = () => {
   const renderItem = (item: SlideItem) => {
     return (
       <YStack flex={1} width="$screenWidth">
-        <YStack bg={'$tertiary'} height={530} borderBottomLeftRadius={24}>
+        <YStack bg="$bgSecondary" height={530} borderBottomLeftRadius={24}>
           <Image source={item.image} width={width} height={500} />
         </YStack>
         <YStack items="center" justify="center" gap="$4" p="$5">
@@ -92,7 +92,7 @@ export const Onboarding = () => {
   };
 
   return (
-    <YStack flex={1}>
+    <YStack flex={1} bg="$bgPrimary">
       <FlatList
         style={{ flexGrow: 1 }}
         ref={flatListRef}

@@ -35,12 +35,12 @@ const ProductCard = ({ product, onPress = () => {} }: IProductCardProps) => {
         style={styles.image}
       />
       <Stack my={12}>
-        <Text fontWeight={'600'} color={'$dark'} fontSize={12} mb={5}>
+        <Text fontWeight={'600'} color="$textPrimary" fontSize={12} mb={5}>
           {title}
         </Text>
         <Text
           fontWeight={'300'}
-          color={'$dark'}
+          color="$textPrimary"
           fontSize={11}
           mb={5}
           numberOfLines={2}
@@ -62,7 +62,7 @@ const styles = StyleSheet.create<Record<string, ViewStyle>>({
   },
   image: {
     height: 200,
-    width: 157,
+    width: 150,
     borderRadius: 8,
   },
 });

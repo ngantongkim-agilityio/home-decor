@@ -42,7 +42,7 @@ const LabelStyled = styled(Label, {
         fontSize: 14,
         lineHeight: 20,
         fontWeight: '500',
-        color: '$dark',
+        color: '$textPrimary',
       },
     },
   } as const,

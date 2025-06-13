@@ -22,6 +22,7 @@ export const Launch = () => {
       height="$screenHeight"
       pb={100}
       rowGap="$6"
+      bg="$bgPrimary"
     >
       <YStack items="center" mt={200}>
         <LogoIcon />
@@ -52,7 +53,6 @@ export const Launch = () => {
         <Button
           title="Sign Up"
           width={207}
-          bg="$tertiary"
           variant="secondary"
           onPress={handleSignup}
         />

@@ -68,43 +68,50 @@ const ProductDetail = () => {
   return (
     <SafeAreaView>
       <ScrollView
-        style={{ height: '100%', paddingHorizontal: 20 }}
+        style={{ height: '100%' }}
         showsVerticalScrollIndicator={false}
       >
-        <YStack rowGap={20}>
-          <XStack items="center" justify="space-between" py={10}>
-            <BackIcon onPress={handleBack} />
-            <Text color="$primary" fontWeight={600} fontSize={20}>
-              {listing?.categories[0]?.name}
-            </Text>
-            <Circle bg="$primary" width={31} height={31}>
-              <SearchIcon />
-            </Circle>
-          </XStack>
-          <Image
-            source={{ uri: listing?.images[0] || '' }}
-            width={'100%'}
-            height={264}
-            borderRadius={20}
-          />
-          <YStack rowGap={10} mt={10}>
-            <H2 fontWeight={'600'} fontSize={24} letterSpacing={0}>
-              {listing?.title || ''}
-            </H2>
-            <Text fontWeight={300} fontSize={12}>
-              {listing?.description || ''}
-            </Text>
-            <Separator borderColor="$primary" my={8} borderWidth={1} />
-            <Text color="$primary" fontWeight={600} fontSize={24}>
-              {listing?.offer_price?.formatted}
-            </Text>
-          </YStack>
+        <YStack bg="$bgPrimary" flex={1} minH="$screenHeight">
+          <YStack rowGap={20} px={20}>
+            <XStack items="center" justify="space-between" py={10}>
+              <BackIcon onPress={handleBack} />
+              <Text color="$primary" fontWeight={600} fontSize={20}>
+                {listing?.categories[0]?.name}
+              </Text>
+              <Circle bg="$primary" width={31} height={31}>
+                <SearchIcon />
+              </Circle>
+            </XStack>
+            <Image
+              source={{ uri: listing?.images[0] || '' }}
+              width={'100%'}
+              height={264}
+              borderRadius={20}
+            />
+            <YStack rowGap={10} mt={10}>
+              <H2
+                fontWeight={'600'}
+                fontSize={24}
+                letterSpacing={0}
+                color="$textPrimary"
+              >
+                {listing?.title || ''}
+              </H2>
+              <Text fontWeight={300} fontSize={12} color="$textPrimary">
+                {listing?.description || ''}
+              </Text>
+              <Separator borderColor="$primary" my={8} borderWidth={1} />
+              <Text color="$primary" fontWeight={600} fontSize={24}>
+                {listing?.offer_price?.formatted}
+              </Text>
+            </YStack>
 
-          <XStack justify="center" mt={50}>
-            <Button width={207} onPress={handleAddToCart}>
-              Add To Cart
-            </Button>
-          </XStack>
+            <XStack justify="center" mt={50}>
+              <Button width={207} onPress={handleAddToCart}>
+                Add To Cart
+              </Button>
+            </XStack>
+          </YStack>
         </YStack>
       </ScrollView>
     </SafeAreaView>

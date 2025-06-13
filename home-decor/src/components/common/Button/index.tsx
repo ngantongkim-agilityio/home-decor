@@ -33,7 +33,7 @@ const ButtonFrame = styled(XStack, {
       },
       secondary: {
         borderRadius: 50,
-        backgroundColor: '$tertiary',
+        backgroundColor: '$bgSecondary',
       },
       outlined: {
         backgroundColor: 'transparent',
@@ -74,7 +74,7 @@ const ButtonText = styled(Text, {
       },
 
       secondary: {
-        color: '$textTertiary',
+        color: '$quaternary',
       },
 
       round: {},

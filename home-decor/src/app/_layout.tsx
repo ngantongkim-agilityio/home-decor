@@ -13,7 +13,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Notifications from 'expo-notifications';
 
 // Providers
-import { TamaguiProvider } from 'tamagui';
+import { TamaguiProvider, Theme } from 'tamagui';
 
 // Hooks
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -65,9 +65,7 @@ const RootLayout = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>
-        <ThemeProvider
-          value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-        >
+        <Theme name={colorScheme}>
           <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="launch" options={{ headerShown: false }} />
@@ -76,7 +74,7 @@ const RootLayout = () => {
             <Stack.Screen name="+not-found" />
           </Stack>
           <StatusBar style="auto" />
-        </ThemeProvider>
+        </Theme>
       </TamaguiProvider>
     </QueryClientProvider>
   );
