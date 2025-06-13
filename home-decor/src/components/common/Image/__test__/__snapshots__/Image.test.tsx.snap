@@ -42,7 +42,7 @@ exports[`Image Component Should render to match snapshot 1`] = `
       source={
         [
           {
-            "testUri": "../../../../../../assets/images/placeholder.png",
+            "testUri": "../../../assets/images/placeholder.png",
           },
         ]
       }

@@ -39,7 +39,12 @@ exports[`Button Component Should render to match snapshot 1`] = `
     style={
       {
         "alignItems": "center",
-        "backgroundColor": "#f4b5a4",
+        "backgroundColor": {
+          "dynamic": {
+            "dark": "#f4b5a4",
+            "light": "#f4b5a4",
+          },
+        },
         "borderBottomLeftRadius": 50,
         "borderBottomRightRadius": 50,
         "borderBottomWidth": 0,
@@ -61,7 +66,12 @@ exports[`Button Component Should render to match snapshot 1`] = `
     <Text
       style={
         {
-          "color": "#cc7862",
+          "color": {
+            "dynamic": {
+              "dark": "#cc7862",
+              "light": "#cc7862",
+            },
+          },
           "fontFamily": "PoppinsBold",
           "fontSize": 15,
           "lineHeight": 21,
