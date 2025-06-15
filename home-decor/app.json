@@ -41,10 +41,10 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/images/notification-icon.png", // only for Android
-          "color": "#363130", // only for Android
-          "defaultChannel": "default", // only for Android
-          "enableBackgroundRemoteNotifications": false // only for iOS
+          "icon": "./assets/images/notification-icon.png",
+          "color": "#363130",
+          "defaultChannel": "default",
+          "enableBackgroundRemoteNotifications": false
         }
       ]
     ],
@@ -59,6 +59,12 @@
         "projectId": "cc894ddd-4264-4b60-b40b-0297b7a0f83c"
       }
     },
-    "owner": "ngantong"
+    "owner": "ngantong",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/cc894ddd-4264-4b60-b40b-0297b7a0f83c"
+    }
   }
 }
