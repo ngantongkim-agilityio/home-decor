@@ -39,7 +39,7 @@ export const Launch = () => {
         </Text>
         <Text
           mt={isAndroid ? -38 : -16}
-          ml={-2}
+          ml={isAndroid ? -2 : 14}
           fontSize={34}
           color="$primary"
           textTransform="uppercase"
