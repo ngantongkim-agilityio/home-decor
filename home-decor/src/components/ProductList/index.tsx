@@ -1,8 +1,8 @@
 // Libs
-import { memo } from 'react';
-import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
+import { memo, useCallback } from 'react';
 import { useRouter } from 'expo-router';
-import { H3, YStack } from 'tamagui';
+import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Components
 import ProductCard from '../ProductCard';
@@ -12,53 +12,59 @@ import { IProduct } from '@/types';
 
 interface IProductListProps {
   products: IProduct[];
+  headerChildren?: React.ReactNode;
   onLoadMore?: () => void;
 }
 
 export const ProductList = ({
   products,
+  headerChildren,
   onLoadMore = () => {},
 }: IProductListProps) => {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
 
-  const getKeyExtractor = ({ id }: IProduct) => id.toString();
+  const getKeyExtractor = useCallback(({ id }: IProduct) => id.toString(), []);
 
-  const renderItemProduct = ({ item }: ListRenderItemInfo<IProduct>) => {
-    const handleNavigateProductDetail = (product: IProduct) => {
-      const id = product.id.toString();
-      router.push(`/details/${id}`);
-    };
+  const renderItemProduct = useCallback(
+    ({ item }: ListRenderItemInfo<IProduct>) => {
+      const handleNavigateProductDetail = (product: IProduct) => {
+        const id = product.id.toString();
+        router.push(`/details/${id}`);
+      };
 
-    return <ProductCard product={item} onPress={handleNavigateProductDetail} />;
-  };
+      return (
+        <ProductCard product={item} onPress={handleNavigateProductDetail} />
+      );
+    },
+    [router],
+  );
+
+  const renderHeaderComponent = useCallback(
+    () => (headerChildren ? <>{headerChildren}</> : null),
+    [headerChildren],
+  );
 
   return (
-    <YStack rowGap={18}>
-      <H3 color="$secondary" fontWeight={500} fontSize={18}>
-        New Collection
-      </H3>
-      <FlatList
-        data={products}
-        onEndReached={onLoadMore}
-        keyExtractor={getKeyExtractor}
-        renderItem={renderItemProduct}
-        initialNumToRender={4}
-        numColumns={2}
-        scrollEnabled={false}
-        columnWrapperStyle={styles.columnProduct}
-        contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-      />
-    </YStack>
+    <FlatList
+      data={products}
+      onEndReached={onLoadMore}
+      keyExtractor={getKeyExtractor}
+      renderItem={renderItemProduct}
+      ListHeaderComponent={renderHeaderComponent}
+      initialNumToRender={6}
+      numColumns={2}
+      nestedScrollEnabled
+      columnWrapperStyle={styles.columnWrapper}
+      contentContainerStyle={{ paddingBottom: insets.bottom ? 30 : 20 }}
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
+    />
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    // width: '100%',
-  },
-  columnProduct: {
+  columnWrapper: {
     justifyContent: 'space-between',
     columnGap: 35,
   },

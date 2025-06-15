@@ -16,7 +16,7 @@ import {
 } from '@/components';
 
 // Constants
-import { AUTH_STORE_KEY } from '@/constants';
+import { AUTH_STORE_KEY, DEFAULT_AVATAR } from '@/constants';
 
 // Hooks
 import { useAuth } from '@/hooks';
@@ -88,7 +88,7 @@ const Profile = () => {
         </XStack>
         <YStack justify="center" items="center">
           <Image
-            source={{ uri: profile_pic }}
+            source={profile_pic || DEFAULT_AVATAR}
             width={148}
             height={148}
             borderRadius={100}

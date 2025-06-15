@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState, useMemo } from 'react';
 import {
   FlatList,
+  ListRenderItemInfo,
   ViewToken,
   ViewabilityConfigCallbackPairs,
   useWindowDimensions,
@@ -23,10 +24,9 @@ type SlideItem = {
 };
 
 export const Onboarding = () => {
+  const { width } = useWindowDimensions();
   const [currentActiveSlide, setCurrentActiveSlide] = useState(0);
   const flatListRef = useRef<FlatList>(null);
-
-  const { width } = useWindowDimensions();
 
   const viewabilityConfig = {
     viewAreaCoveragePercentThreshold: 100,
@@ -68,28 +68,43 @@ export const Onboarding = () => {
     [{ viewabilityConfig, onViewableItemsChanged }],
   );
 
-  const renderItem = (item: SlideItem) => {
-    return (
-      <YStack flex={1} width="$screenWidth">
-        <YStack bg="$bgSecondary" height={530} borderBottomLeftRadius={24}>
-          <Image source={item.image} width={width} height={500} />
-        </YStack>
-        <YStack items="center" justify="center" gap="$4" p="$5">
+  const getKeyExtractor = useCallback(({ id }: SlideItem) => id.toString(), []);
+
+  const renderItem = useCallback(
+    ({ item }: ListRenderItemInfo<SlideItem>) => {
+      return (
+        <YStack height="100%" width={width} items="center">
+          <YStack
+            bg="$bgSecondary"
+            height={530}
+            width={width}
+            borderBottomLeftRadius={24}
+          >
+            <Image source={item.image} width={width} height={500} />
+          </YStack>
           <H1
-            fontFamily="$body"
             color="$primary"
             fontSize={30}
             fontWeight="700"
+            letterSpacing={0}
+            mt={20}
           >
             {item.title}
           </H1>
-          <Text text="center" color="$textSecondary" fontSize={12}>
+          <Text
+            maxW={323}
+            mt="$4"
+            text="center"
+            color="$textPrimary"
+            fontSize={12}
+          >
             {item.description}
           </Text>
         </YStack>
-      </YStack>
-    );
-  };
+      );
+    },
+    [width],
+  );
 
   return (
     <YStack flex={1} bg="$bgPrimary">
@@ -97,11 +112,11 @@ export const Onboarding = () => {
         style={{ flexGrow: 1 }}
         ref={flatListRef}
         data={ONBOARDING_SLIDES}
-        keyExtractor={(item) => item.id}
+        keyExtractor={getKeyExtractor}
+        renderItem={renderItem}
         horizontal
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => renderItem(item)}
         pagingEnabled
+        showsHorizontalScrollIndicator={false}
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       />
       <YStack style={{ bottom: 30 }} p="$5" position="absolute">

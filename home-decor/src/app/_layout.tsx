@@ -1,11 +1,13 @@
+import 'react-native-reanimated';
+
 import { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import 'react-native-reanimated';
 import { useFonts } from 'expo-font';
 import { Stack, router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Notifications from 'expo-notifications';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 // Providers
 import { TamaguiProvider, Theme } from 'tamagui';
@@ -61,14 +63,16 @@ const RootLayout = () => {
     <QueryClientProvider client={queryClient}>
       <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>
         <Theme name={colorScheme}>
-          <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="launch" options={{ headerShown: false }} />
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-          <StatusBar style="auto" />
+          <SafeAreaProvider>
+            <Stack>
+              <Stack.Screen name="index" options={{ headerShown: false }} />
+              <Stack.Screen name="launch" options={{ headerShown: false }} />
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+            <StatusBar style="auto" />
+          </SafeAreaProvider>
         </Theme>
       </TamaguiProvider>
     </QueryClientProvider>

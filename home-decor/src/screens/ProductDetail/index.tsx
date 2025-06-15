@@ -1,7 +1,7 @@
 // Libs
 import { useCallback } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { ScrollView } from 'react-native';
+import { ScrollView, useColorScheme } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, XStack, Circle, H2, YStack, Separator } from 'tamagui';
 // import dynamicLinks from '@react-native-firebase/dynamic-links';
@@ -12,10 +12,16 @@ import { Button, Image } from '@/components';
 
 // Hooks
 import { useProducts } from '@/hooks';
+
+// Utils
 import { scheduleNotification } from '@/utils';
+
+// Themes
+import { systemThemes } from '@/themes';
 
 const ProductDetail = () => {
   const { id } = useLocalSearchParams();
+  const colorScheme = useColorScheme();
   const router = useRouter();
   const { useFetchProductDetail } = useProducts();
   const { data } = useFetchProductDetail(id as string);
@@ -74,7 +80,10 @@ const ProductDetail = () => {
         <YStack bg="$bgPrimary" flex={1} minH="$screenHeight">
           <YStack rowGap={20} px={20}>
             <XStack items="center" justify="space-between" py={10}>
-              <BackIcon onPress={handleBack} />
+              <BackIcon
+                color={systemThemes[colorScheme ?? 'light'].textPrimary}
+                onPress={handleBack}
+              />
               <Text color="$primary" fontWeight={600} fontSize={20}>
                 {listing?.categories[0]?.name}
               </Text>

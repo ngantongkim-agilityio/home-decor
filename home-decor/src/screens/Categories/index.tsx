@@ -5,7 +5,13 @@ import { Text, XStack } from 'tamagui';
 const Categories = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <XStack items="center" justify="center" py={10}>
+      <XStack
+        flex={1}
+        items="flex-start"
+        justify="center"
+        py={10}
+        bg="$bgPrimary"
+      >
         <Text color="$primary" fontWeight={600} fontSize={20}>
           Categories
         </Text>
@@ -16,9 +22,7 @@ const Categories = () => {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '$light',
+    flex: 1,
   },
 });
 

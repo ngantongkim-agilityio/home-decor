@@ -1,5 +1,4 @@
 import { ScrollView, StyleSheet } from 'react-native';
-import { H3, Stack, YStack } from 'tamagui';
 
 // Components
 import CategoryItem from '../CategoryItem';
@@ -17,27 +16,20 @@ const CategoryList = ({
   onPressItem = () => {},
 }: ICategoryListProps) => {
   return (
-    <YStack rowGap={18}>
-      <H3 color="$secondary" fontWeight={500} fontSize={18}>
-        Categories
-      </H3>
-      <ScrollView
-        horizontal
-        contentContainerStyle={styles.wrapper}
-        showsHorizontalScrollIndicator={false}
-      >
-        {(categories || []).map((item) => (
-          <CategoryItem key={item.label} item={item} onPress={onPressItem} />
-        ))}
-      </ScrollView>
-    </YStack>
+    <ScrollView
+      horizontal
+      contentContainerStyle={styles.container}
+      showsHorizontalScrollIndicator={false}
+    >
+      {(categories || []).map((item) => (
+        <CategoryItem key={item.label} item={item} onPress={onPressItem} />
+      ))}
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  wrapper: {
-    flexDirection: 'row',
-    width: '100%',
+  container: {
     columnGap: 14,
   },
 });

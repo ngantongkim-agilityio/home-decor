@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { Platform } from 'react-native';
 import { router } from 'expo-router';
 import { YStack, Text } from 'tamagui';
 
@@ -7,6 +8,8 @@ import { Button } from '@/components/common/Button';
 import { LogoIcon } from '@/components/icons';
 
 export const Launch = () => {
+  const isAndroid = Platform.OS === 'android';
+
   const handleLogin = useCallback(() => {
     router.navigate(`/login`);
   }, []);
@@ -24,7 +27,7 @@ export const Launch = () => {
       rowGap="$6"
       bg="$bgPrimary"
     >
-      <YStack items="center" mt={200}>
+      <YStack items="center" mt={100}>
         <LogoIcon />
         <Text
           fontSize={58}
@@ -35,8 +38,8 @@ export const Launch = () => {
           Home
         </Text>
         <Text
-          mt={-16}
-          ml={16}
+          mt={isAndroid ? -38 : -16}
+          ml={-2}
           fontSize={34}
           color="$primary"
           textTransform="uppercase"
