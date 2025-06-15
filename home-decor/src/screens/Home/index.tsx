@@ -45,12 +45,12 @@ const Home = () => {
           width="100%"
           height={132}
         />
-        <YStack rowGap={18}>
+        {/* <YStack rowGap={18}>
           <H3 color="$secondary" fontWeight={500} fontSize={18}>
             Categories
           </H3>
           <CategoryList categories={CATEGORIES_DATA} />
-        </YStack>
+        </YStack> */}
         <YStack rowGap={18}>
           <H3 color="$secondary" fontWeight={500} fontSize={18}>
             Best Seller
