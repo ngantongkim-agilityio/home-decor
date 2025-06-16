@@ -13,7 +13,7 @@
     "lint": "expo lint",
     "prepare": "cd .. && husky home-decor/.husky",
     "build:apk": "cd android && ./gradlew assembleRelease",
-    "trigger-build-android": "eas workflow:run .eas/workflows/build-android-development.yml"
+    "trigger-build-development": "eas workflow:run .eas/workflows/create-development-builds.yml"
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",
