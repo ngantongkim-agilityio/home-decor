@@ -1,32 +1,72 @@
-import { TouchableWithoutFeedback } from 'react-native';
-import { Image, Text, Stack } from 'tamagui';
+import { TouchableOpacity } from 'react-native';
+import { Stack } from 'tamagui';
 
-// Types
-import { ICategory } from '@/types';
+// Icons
+import {
+  LivingRoomIcon,
+  BedRoomIcon,
+  DiningRoomIcon,
+  KitchenIcon,
+} from '@/components';
 
-// Colors
+// Themes
 import { colors } from '@/themes';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 interface ICategoryItemProps {
-  item: ICategory;
+  type: string;
+  isActive?: boolean;
   onPress?: () => void;
 }
-const CategoryItem = ({ item, onPress = () => {} }: ICategoryItemProps) => {
-  const Icon = item.imageSrc;
+const CategoryItem = ({
+  type,
+  isActive,
+  onPress = () => {},
+}: ICategoryItemProps) => {
+  const getIcon = (type: string) => {
+    switch (type) {
+      case 'livingRoom':
+        return (
+          <LivingRoomIcon
+            color={isActive ? colors.secondary : colors.textTertiary}
+          />
+        );
+      case 'bedRoom':
+        return (
+          <BedRoomIcon
+            color={isActive ? colors.secondary : colors.textTertiary}
+          />
+        );
+      case 'diningRoom':
+        return (
+          <DiningRoomIcon
+            color={isActive ? colors.secondary : colors.textTertiary}
+          />
+        );
+      case 'kitchen':
+        return (
+          <KitchenIcon
+            color={isActive ? colors.secondary : colors.textTertiary}
+          />
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
-    <TouchableWithoutFeedback onPress={onPress} testID="CategoryItem">
+    <TouchableOpacity onPress={onPress} testID="CategoryItem">
       <Stack
         width={66}
         height={66}
-        bg={item.isActive ? '$primary' : '$tertiary'}
+        bg={isActive ? '$primary' : '$tertiary'}
         items="center"
         justify="center"
         borderRadius={10}
       >
-        <Icon color={item.isActive ? colors.secondary : colors.textTertiary} />
+        {getIcon(type)}
       </Stack>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 };
 export default CategoryItem;

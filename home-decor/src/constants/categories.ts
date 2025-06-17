@@ -1,45 +1,37 @@
-import {
-  LivingRoomIcon,
-  BedRoomIcon,
-  DiningRoomIcon,
-  KitchenIcon,
-  OfficeIcon,
-} from '@/components';
-
 export const CATEGORIES_DATA = [
   {
     id: 'living-room',
-    imageSrc: LivingRoomIcon,
+    type: 'livingRoom',
     label: 'Living room',
     isActive: true,
   },
   {
     id: 'bed-room',
-    imageSrc: BedRoomIcon,
+    type: 'bedRoom',
     label: 'Bed room',
     isActive: false,
   },
   {
     id: 'dining-room',
-    imageSrc: DiningRoomIcon,
+    type: 'diningRoom',
     label: 'Dining room',
     isActive: false,
   },
   {
     id: 'kitchen',
-    imageSrc: KitchenIcon,
+    type: 'kitchen',
     label: 'Kitchen',
     isActive: false,
   },
   {
     id: 'office',
-    imageSrc: KitchenIcon,
+    type: 'kitchen',
     label: 'Office',
     isActive: false,
   },
   {
     id: 'office-two',
-    imageSrc: KitchenIcon,
+    type: 'kitchen',
     label: 'Office Two',
     isActive: false,
   },

@@ -1,6 +1,6 @@
 export interface ICategory {
   id: string;
-  imageSrc: React.ElementType;
+  type: string;
   label: string;
   isActive: boolean;
 }

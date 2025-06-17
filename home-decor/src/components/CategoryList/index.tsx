@@ -22,7 +22,12 @@ const CategoryList = ({
       showsHorizontalScrollIndicator={false}
     >
       {(categories || []).map((item) => (
-        <CategoryItem key={item.label} item={item} onPress={onPressItem} />
+        <CategoryItem
+          key={item.id}
+          type={item.type}
+          isActive={item.isActive}
+          onPress={onPressItem}
+        />
       ))}
     </ScrollView>
   );
