@@ -24,31 +24,17 @@ const CategoryItem = ({
   onPress = () => {},
 }: ICategoryItemProps) => {
   const getIcon = (type: string) => {
+    const iconColor = isActive ? colors.secondary : colors.textTertiary;
+
     switch (type) {
       case 'livingRoom':
-        return (
-          <LivingRoomIcon
-            color={isActive ? colors.secondary : colors.textTertiary}
-          />
-        );
+        return <LivingRoomIcon color={iconColor} />;
       case 'bedRoom':
-        return (
-          <BedRoomIcon
-            color={isActive ? colors.secondary : colors.textTertiary}
-          />
-        );
+        return <BedRoomIcon color={iconColor} />;
       case 'diningRoom':
-        return (
-          <DiningRoomIcon
-            color={isActive ? colors.secondary : colors.textTertiary}
-          />
-        );
+        return <DiningRoomIcon color={iconColor} />;
       case 'kitchen':
-        return (
-          <KitchenIcon
-            color={isActive ? colors.secondary : colors.textTertiary}
-          />
-        );
+        return <KitchenIcon color={iconColor} />;
       default:
         return null;
     }
