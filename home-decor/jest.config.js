@@ -6,6 +6,9 @@ module.exports = {
   transformIgnorePatterns: [],
   collectCoverageFrom: [
     'src/components/**/*.{ts,tsx}',
+    'src/screens/**/*.{ts,tsx}',
+    'src/hooks/**/*.{ts,tsx}',
+    'src/services/**/*.{ts,tsx}',
   ],
   moduleNameMapper: { // for https://github.com/facebook/jest/issues/919
     "^@/assets/(.*)$": "<rootDir>/assets/$1",
