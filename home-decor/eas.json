@@ -6,10 +6,16 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "APP_VARIANT": "development"
+      }
     },
     "development-simulator": {
       "extends": "development",
+      "env": {
+        "APP_VARIANT": "development"
+      },
       "ios": {
         "simulator": true
       },
@@ -17,6 +23,9 @@
     },
     "preview": {
       "distribution": "internal",
+      "env": {
+        "APP_VARIANT": "preview"
+      },
       "channel": "main",
       "android": {
         "image": "latest"
@@ -28,6 +37,9 @@
     "production": {
       "channel": "production",
       "autoIncrement": true,
+      "env": {
+        "APP_VARIANT": "production"
+      },
       "android": {
         "image": "latest"
       },
