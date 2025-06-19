@@ -1,6 +1,7 @@
 import 'react-native-reanimated';
 
 import { useEffect } from 'react';
+import { useColorScheme } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { Stack, router } from 'expo-router';
@@ -11,9 +12,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 // Providers
 import { TamaguiProvider, Theme } from 'tamagui';
-
-// Hooks
-import { useColorScheme } from '@/hooks/useColorScheme';
 
 // Config
 import { tamaguiConfig } from '@/themes/tamagui.config';

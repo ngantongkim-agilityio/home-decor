@@ -1,4 +1,5 @@
 import { createFont } from 'tamagui';
+import { spacing } from './metrics';
 
 const getFontFace = (fontFamily = 'Poppins') => ({
   normal: { normal: `${fontFamily}Regular`, italic: `${fontFamily}-Regular` },
@@ -10,7 +11,7 @@ const getFontFace = (fontFamily = 'Poppins') => ({
 
 export const poppinsFont = createFont({
   size: {
-    6: 15,
+    ...spacing,
   },
   transform: {
     6: 'uppercase',
@@ -40,7 +41,7 @@ export const poppinsFont = createFont({
 
 export const leagueSpartanFont = createFont({
   size: {
-    6: 15,
+    ...spacing,
   },
   transform: {
     6: 'uppercase',
