@@ -8,8 +8,8 @@ const variantSystem = {
     scheme: 'com.homedecorapp',
     bundleId: 'com.ngantong.homedecor.dev',
     icon: './assets/images/icon.png',
-    ios_icon: './assets/images/logo-icon.png',
-    android_icon: './assets/images/logo-adaptive-icon.png',
+    ios_icon: './assets/images/icon.png',
+    android_icon: './assets/images/adaptive-icon.png',
     android_bg_color: '#f4b5a4',
   },
   development: {
@@ -19,8 +19,8 @@ const variantSystem = {
     scheme: 'com.homedecorapp',
     bundleId: 'com.ngantong.homedecor.dev',
     icon: './assets/images/icon.png',
-    ios_icon: './assets/images/logo-icon.png',
-    android_icon: './assets/images/logo-adaptive-icon.png',
+    ios_icon: './assets/images/icon.png',
+    android_icon: './assets/images/adaptive-icon.png',
     android_bg_color: '#f4b5a4',
   },
   production: {
@@ -30,8 +30,8 @@ const variantSystem = {
     scheme: 'com.homedecorapp',
     bundleId: 'com.ngantong.homedecor.prod',
     icon: './assets/images/icon.png',
-    ios_icon: './assets/images/logo-icon.png',
-    android_icon: './assets/images/logo-adaptive-icon.png',
+    ios_icon: './assets/images/icon.png',
+    android_icon: './assets/images/adaptive-icon.png',
     android_bg_color: '#f4b5a4',
   },
 };
