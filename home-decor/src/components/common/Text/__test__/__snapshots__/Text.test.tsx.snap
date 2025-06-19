@@ -11,7 +11,7 @@ exports[`Text Component Should render to match snapshot 1`] = `
         },
       },
       "fontFamily": "PoppinsRegular",
-      "fontSize": "$4",
+      "fontSize": 16,
       "lineHeight": 17,
       "textDecorationLine": "none",
     }

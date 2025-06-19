@@ -39,7 +39,7 @@ exports[`Input Component Should render to match snapshot 1`] = `
         "borderTopLeftRadius": 50,
         "borderTopRightRadius": 50,
         "borderTopWidth": 0,
-        "fontFamily": "$body",
+        "fontFamily": "PoppinsRegular",
         "fontSize": 14,
         "height": 41,
         "minWidth": 0,
