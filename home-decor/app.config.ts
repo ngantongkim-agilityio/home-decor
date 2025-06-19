@@ -99,7 +99,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         'expo-secure-store',
         {
           configureAndroidBackup: true,
-          faceIDPermission: `Allow ${process.env.PRODUCT_NAME} to access your Face ID biometric data.`
+          faceIDPermission: `Allow app to access your Face ID biometric data.`
         }
       ]
     ],
