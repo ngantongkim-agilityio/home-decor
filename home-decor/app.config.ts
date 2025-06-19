@@ -95,6 +95,13 @@ export default ({ config }: ConfigContext): ExpoConfig => {
           enableBackgroundRemoteNotifications: false,
         },
       ],
+      [
+        'expo-secure-store',
+        {
+          configureAndroidBackup: true,
+          faceIDPermission: `Allow ${process.env.PRODUCT_NAME} to access your Face ID biometric data.`
+        }
+      ]
     ],
     experiments: {
       typedRoutes: true,
