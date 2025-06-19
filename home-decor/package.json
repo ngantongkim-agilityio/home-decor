@@ -58,7 +58,8 @@
     "zod": "^3.25.57",
     "zustand": "^5.0.3",
     "expo-dev-client": "~5.0.20",
-    "expo-updates": "~0.27.4"
+    "expo-updates": "~0.27.4",
+    "expo-image-picker": "~16.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

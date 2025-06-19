@@ -3,7 +3,7 @@ import { ExpoConfig, ConfigContext } from '@expo/config';
 const variantSystem = {
   preview: {
     name: 'Home Decor (Preview)',
-    slug: 'home-decor-preview',
+    slug: 'home-decor',
     version: '1.0.1',
     scheme: 'com.homedecorapp',
     bundleId: 'com.ngantong.homedecor.dev',
@@ -14,7 +14,7 @@ const variantSystem = {
   },
   development: {
     name: 'Home Decor (Dev)',
-    slug: 'home-decor-dev',
+    slug: 'home-decor',
     version: '1.0.1',
     scheme: 'com.homedecorapp',
     bundleId: 'com.ngantong.homedecor.dev',
@@ -25,7 +25,7 @@ const variantSystem = {
   },
   production: {
     name: 'Home Decor',
-    slug: 'home-decor-prod',
+    slug: 'home-decor',
     version: '1.0.1',
     scheme: 'com.homedecorapp',
     bundleId: 'com.ngantong.homedecor.prod',

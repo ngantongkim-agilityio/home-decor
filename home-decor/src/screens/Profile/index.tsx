@@ -1,5 +1,11 @@
 import { useCallback } from 'react';
-import { StyleSheet, useColorScheme, Appearance, Switch } from 'react-native';
+import {
+  StyleSheet,
+  useColorScheme,
+  Appearance,
+  Switch,
+  TouchableOpacity,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -13,13 +19,14 @@ import {
   LargeProfileIcon,
   LargeWishlistIcon,
   OrderIcon,
+  CameraIcon,
 } from '@/components';
 
 // Constants
 import { AUTH_STORE_KEY, DEFAULT_AVATAR } from '@/constants';
 
 // Hooks
-import { useAuth } from '@/hooks';
+import { useAuth, useImagePicker } from '@/hooks';
 
 // Stores
 import { authStore, userStore } from '@/stores';
@@ -33,6 +40,7 @@ import { colors } from '@/themes';
 const Profile = () => {
   const router = useRouter();
   const colorScheme = useColorScheme();
+  const { image, pickImageAsync } = useImagePicker();
   const [removeAuth, authKey] = authStore(
     useShallow((state) => [state.removeAuth, state.authKey]),
   );
@@ -87,12 +95,22 @@ const Profile = () => {
           </Text>
         </XStack>
         <YStack justify="center" items="center">
-          <Image
-            source={profile_pic || DEFAULT_AVATAR}
-            width={148}
-            height={148}
-            borderRadius={100}
-          />
+          <YStack position="relative">
+            <Image
+              source={image || profile_pic || DEFAULT_AVATAR}
+              width={148}
+              height={148}
+              borderRadius={100}
+            />
+            <TouchableOpacity
+              style={{ position: 'absolute', bottom: 10, right: 0 }}
+              onPress={pickImageAsync}
+            >
+              <Circle bg="$primary" width={35} height={35}>
+                <CameraIcon />
+              </Circle>
+            </TouchableOpacity>
+          </YStack>
           <Text fontWeight={'700'} color="$textPrimary" fontSize={22} mt={16}>
             {first_name} {last_name}
           </Text>

@@ -19,3 +19,4 @@ export { default as LargeWishlistIcon } from './LargeWishlistIcon';
 export { default as ExtraWishlistIcon } from './ExtraWishlistIcon';
 export { default as LargeProfileIcon } from './LargeProfileIcon';
 export { default as ExtraCardIcon } from './ExtraCardIcon';
+export { default as CameraIcon } from './CameraIcon';
